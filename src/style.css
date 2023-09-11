@@ -1,0 +1,135 @@
+@charset "UTF-8";
+.body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.rotate-img {
+  transform: rotate(90deg);
+  transition: transform 1s ease-in-out;
+}
+
+.rotate-img-bis {
+  transform: rotate(0);
+  transition: transform 1s ease-in-out;
+}
+
+.container {
+  box-sizing: border-box;
+  padding: 10px;
+  text-align: center;
+}
+.container__square::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url("../assets/sea.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5; /* Rend l'image plus transparente */
+  filter: contrast(80%); /* Ajuste le contraste */
+  z-index: -1; /* Place l'image derrière le contenu */
+}
+.container__square {
+  overflow: hidden;
+  position: relative;
+  border: 1px solid blueviolet;
+  min-height: 500px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  margin: auto;
+  width: 300px;
+}
+
+.circle {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  left: var(--x-position);
+  top: var(--y-position);
+  border-radius: 100%;
+  transition: border-radius 1s ease, background-color 1s ease, left 0.1s linear top 0.1s linear;
+}
+
+.rect {
+  position: absolute;
+  width: 23px;
+  height: 128px;
+  left: var(--x-position);
+  top: var(--y-position);
+  border-radius: 0%;
+}
+
+.off {
+  display: none;
+}
+
+.square {
+  z-index: 10;
+  position: absolute;
+  width: 35px;
+  height: 40px;
+  left: var(--x-position);
+  top: var(--y-position);
+}
+
+.directionButton {
+  border: 1px solid black;
+  padding: 2px;
+  display: block;
+  border-radius: 3px;
+  width: 40px;
+  padding: auto;
+  text-align: center;
+  box-shadow: 5px 5px 5px grey;
+  transition: all 0.3s ease;
+}
+.directionButton:hover {
+  cursor: pointer;
+  box-shadow: 10px 10px 10px grey;
+  color: white;
+}
+
+.flex-row-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100px;
+}
+
+.flex-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100px;
+  margin: 5px 0;
+}
+
+.gamePad {
+  border: 1px solid black;
+  padding: 5px;
+  width: 300px;
+  border-radius: 5px;
+  box-shadow: 10px 5px 5px grey;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.bullet {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  left: var(--x-position);
+  top: var(--y-position);
+  border-radius: 100%;
+}
+
+/*# sourceMappingURL=output.css.map */
