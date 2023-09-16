@@ -2,8 +2,67 @@ import SquareContainer from "./SquareContainer";
 
 export default class Game {
 
+  static checkCollisions(container: SquareContainer){
+    Game.checkOutOfScreenBullets();
+    Game.checkShipOutOfScreen(container);
+    Game.checkBulletAndShipCollisions();
+
+  }
+
+  static checkOutOfScreenBullets() {
+  let bulletsToRemove: number[] = [];
+  for (let j = 0; j < SquareContainer.bulletList.length; j++) {
+    const bullet = SquareContainer.bulletList[j];
+    const bulletRect = {
+      x: bullet.getCoordX(),
+      y: bullet.getCoordY(),
+      width: bullet.getWidth(),
+      height: bullet.getHeight(),
+    };
+    if (bulletRect.y <= 1) {
+      bulletsToRemove.push(j);
+    }
+  }
+
+  for ( let bullet of bulletsToRemove.reverse() ) {
+    SquareContainer.bulletList[bullet].getHtmlElement().remove();
+    SquareContainer.bulletList.splice(bullet, 1);
+  }
+}
+
+  static checkShipOutOfScreen(container : SquareContainer): void {
+
+    let shipsToRemove: number[] = [];
+
+    for ( let i = 0; i < SquareContainer.shipList.length; i++ ) {
+      const ship = SquareContainer.shipList[i];
+      const shipRect = {
+        x : ship.getCoordX(),
+        y : ship.getCoordY(),
+        width : ship.getWidth(),
+        height :
+         ship.getHeight()
+      }
+
+      // test si le ship sort de l'écran
+      if (shipRect.y > container.getHeight() - shipRect.height) {
+        shipsToRemove.push(i);
+      }
+    }
+
+    for(let i of shipsToRemove) {
+      SquareContainer.shipList[i].getHtmlElement().remove();
+      SquareContainer.shipList.splice(i,1);
+
+    }
+
+    }
+
+  
+
+
   // Gestion des collisions   
-  static checkCollisions() {
+  static checkBulletAndShipCollisions() {
     let shipsToRemove: number[] = [];
     let bulletsToRemove: number[] = [];
 
@@ -18,15 +77,9 @@ export default class Game {
         width: ship.getWidth(),
         height: ship.getHeight(),
       };
-      // si le bateau sort del'écran, on le supprime 
-      // Sinon on gére 
-      if(shipRect.y > 450){
-            shipsToRemove.push(i);
-      } 
-      
 
-      else {
-         // Pour chaque bullet dans le tableau
+    
+      // Pour chaque bullet dans le tableau
       for (let j = 0; j < SquareContainer.bulletList.length; j++) {
         const bullet = SquareContainer.bulletList[j];
         const bulletRect = {
@@ -35,8 +88,6 @@ export default class Game {
           width: bullet.getWidth(),
           height: bullet.getHeight()
         };
-        // console.log( "bullet : ", bulletRect.x, bulletRect.y, bulletRect.width, bulletRect.height);
-        // console.log("ship : ", shipRect.x, shipRect.y, shipRect.width, shipRect.height);
         console.log(SquareContainer.bulletList.length)
         console.log(SquareContainer.shipList.length)
 
@@ -60,7 +111,7 @@ export default class Game {
 
        
       }
-      }
+      
 
      
     }

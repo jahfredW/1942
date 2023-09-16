@@ -6,14 +6,10 @@ import SpawnManager  from './classes/SpawnManager';
 import Game  from './classes/Game';
 
 // Instanciation des éléments 
-const squareContainer = new SquareContainer();
+
 const plane = new Plane();
+const squareContainer = new SquareContainer();
 plane.build(squareContainer);
-
-// const factory = new ConcreteEnnemyShipFactory();
-
-// factory.shipOrder('cruiser', squareContainer);
-
 
 // récupération des éléments HTML correspondants à la classe
 const squareContainerElement = squareContainer.getHtmlElement();
@@ -25,22 +21,25 @@ let spawnManager = new SpawnManager(squareContainer);
 // main Game Loop
 function gameLoop(timestamp : number) : void {
 
+    // temps écoulé = temps total - temps dernière boucle
     let deltaTime = timestamp - lastTime;
     lastTime = timestamp;
 
-    
-
+    // Gestion du respawn des bateaux
     spawnManager.update(timestamp);
 
+    // déplacement des bateaux
     for (const ship of SquareContainer.shipList) {
         ship.move(deltaTime);
     }
     
+    // déplacemet des missiles
     for (const bullet of SquareContainer.bulletList) { // Assume BulletList est le tableau contenant toutes vos instances de Bullet
         bullet.move(deltaTime);
     }    
 
-    Game.checkCollisions();
+    // Gestion des collisions 
+    Game.checkCollisions(squareContainer);
     // Mettez ici le code pour créer des bateaux, etc.
     // Vous pouvez utiliser deltaTime pour ajuster le timing
   

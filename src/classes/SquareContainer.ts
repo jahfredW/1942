@@ -35,11 +35,27 @@ export default class SquareContainer implements IHtmlElementInterface {
     constructor( 
         private square : Plane = new Plane(),
         private coords : ContainerCoords = {x:0,y:0},
-        // private dimensions: ContainerDimensions = {width:50,height:50},
-        private htmlElement : HTMLElement = document.querySelector('.container__square')!
+        private htmlElement : HTMLElement = document.querySelector('.container__square')!,
+        private width : number = htmlElement.offsetWidth,
+        private height : number = htmlElement.offsetHeight
+        
         ) {
-            
+           
         }
+
+
+    init(){
+        this.height = this.htmlElement.offsetHeight;
+        this.width = this.htmlElement.offsetWidth;
+    }
+
+    getWidth(){
+        return this.width;
+    }
+
+    getHeight(){
+        return this.height;
+    }
 
     getCoords() : ContainerCoords {
         return this.coords;
