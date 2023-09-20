@@ -12,7 +12,7 @@ const squareContainer = new SquareContainer();
 plane.build(squareContainer);
 
 // récupération des éléments HTML correspondants à la classe
-const squareContainerElement = squareContainer.getHtmlElement();
+
 
 let lastTime = 0
 let spawnManager = new SpawnManager(squareContainer);
@@ -33,10 +33,14 @@ function gameLoop(timestamp : number) : void {
         ship.move(deltaTime);
     }
     
-    // déplacemet des missiles
+    // déplacement des missiles
     for (const bullet of SquareContainer.bulletList) { // Assume BulletList est le tableau contenant toutes vos instances de Bullet
         bullet.move(deltaTime);
     }    
+
+    for (const missile of SquareContainer.missileList) { // Assume BulletList est le tableau contenant toutes vos instances de Bullet
+        missile.move(deltaTime);
+    } 
 
     // Gestion des collisions 
     Game.checkCollisions(squareContainer);
@@ -78,10 +82,10 @@ requestAnimationFrame(gameLoop);
 // });
 
 // Global Events
-document.addEventListener('keydown', (e) => plane.moveSquare(e, null, squareContainerElement));
-document.addEventListener('mousedown', (e) => plane.moveSquare(e, null, squareContainerElement));
-document.addEventListener('mousemove', (e) => plane.moveSquare(e, null, squareContainerElement));
-document.addEventListener('mouseup', (e) => plane.moveSquare(e, null, squareContainerElement));
+document.addEventListener('keydown', (e) => plane.moveSquare(e, null, squareContainer));
+document.addEventListener('mousedown', (e) => plane.moveSquare(e, null, squareContainer));
+document.addEventListener('mousemove', (e) => plane.moveSquare(e, null, squareContainer));
+document.addEventListener('mouseup', (e) => plane.moveSquare(e, null, squareContainer));
 
 
 

@@ -58,9 +58,6 @@ export default class Game {
 
     }
 
-  
-
-
   // Gestion des collisions   
   static checkBulletAndShipCollisions() {
     let shipsToRemove: number[] = [];

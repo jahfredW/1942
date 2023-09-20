@@ -14,7 +14,7 @@ export default class Cruiser extends Ship {
 
         this.htmlElement.classList.add("rect");
 
-        this.htmlElement.src =  " ../../assets/cruiser/ship.png";
+        this.htmlElement.src =  "/assets/cruiser/ship.png";
         this.coords.x =  Math.floor(Math.random() * 1000) + 1; ;
         this.coords.y = 0;
 

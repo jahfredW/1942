@@ -140,3 +140,13 @@ h1 {
     top: var(--y-position);
     border-radius: 100%;
 }
+
+.missile {
+    position: absolute;
+    // background-color: rgb(224, 18, 18);
+    width: 40px;
+    height: 40px;
+    left: var(--x-position);
+    top: var(--y-position);
+    border-radius: 100%;
+}

@@ -2,6 +2,7 @@ import Bullet from "./Bullet";
 import Shape  from "./Shape";
 import SquareContainer from "./SquareContainer";
 import IHtmlElementInterface from "./IHtmlElementInterface";
+import ConcreteWeaponFactory from "./ConcreteWeaponFactory";
 
 
 /**
@@ -42,7 +43,7 @@ export default class Plane extends Shape implements IHtmlElementInterface  {
 
     build(container : SquareContainer){
         this.htmlElement.classList.add("square");
-        this.htmlElement.src = "../../assets/plane/plane.png"
+        this.htmlElement.src = "/assets/plane/plane.png"
         this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
         this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
         container.getHtmlElement().appendChild(this.htmlElement);
@@ -53,8 +54,9 @@ export default class Plane extends Shape implements IHtmlElementInterface  {
         return this.htmlElement.width;
     }
 
-    shoot(squareContainer : HTMLElement) : void {
-        let bullet = new Bullet();
+    shoot(squareContainer : SquareContainer) : void {
+        let weaponfactory = new ConcreteWeaponFactory();
+        let bullet = weaponfactory.weaponCreate("bullet");
         
         bullet.setCoord(this.coords.x + 12, this.coords.y);  // Définir les coordonnées avant de construire
         bullet.build(squareContainer);
@@ -72,7 +74,7 @@ export default class Plane extends Shape implements IHtmlElementInterface  {
     }
 
 
-    moveSquare(e :  Event, button: HTMLElement | null, squareContainerElement: HTMLElement)  : void {
+    moveSquare(e :  Event, button: HTMLElement | null, squareContainer: SquareContainer)  : void {
        
                 // mise à jour des positions du Blob ET de son tir Bullet 
                     // let posX = this.htmlElement.offsetLeft;
@@ -115,7 +117,7 @@ export default class Plane extends Shape implements IHtmlElementInterface  {
                                 this.coords.y = this.coords.y + dy;
                             }
                             if (e.type === 'mousedown') {
-                                this.shoot(squareContainerElement)
+                                this.shoot(squareContainer)
                             }
                         }
                         
@@ -137,7 +139,7 @@ export default class Plane extends Shape implements IHtmlElementInterface  {
                             this.coords.y -= 10;
                             break;
                         case " ":
-                            this.shoot(squareContainerElement);  
+                            this.shoot(squareContainer);  
                     }
            
 
@@ -147,8 +149,8 @@ export default class Plane extends Shape implements IHtmlElementInterface  {
                 
     }
     // Limite les positions à l'intérieur du conteneur
-    let containerWidth = squareContainerElement?.getBoundingClientRect().width || 0;
-    let containerHeigth = squareContainerElement?.getBoundingClientRect().height || 0;
+    let containerWidth = squareContainer.getHtmlElement()?.getBoundingClientRect().width || 0;
+    let containerHeigth = squareContainer.getHtmlElement()?.getBoundingClientRect().height || 0;
     this.coords.x = Math.min(Math.max(this.coords.x, 0), containerWidth - 50);
     this.coords.y = Math.min(Math.max(this.coords.y, 0), containerHeigth - 50);  // Peut-être utiliser containerHeight ici ?
     

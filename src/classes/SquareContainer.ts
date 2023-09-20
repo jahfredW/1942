@@ -1,4 +1,5 @@
 import Bullet  from "./Bullet";
+import Missile  from "./Missile";
 import Ship from "./Ship";
 import Plane from "./Plane";
 import IHtmlElementInterface from "./IHtmlElementInterface";
@@ -31,6 +32,7 @@ export default class SquareContainer implements IHtmlElementInterface {
     
     static shipList : Ship[] = [];
     static bulletList : Bullet[] = [];
+    static missileList : Missile[] = [];
 
     constructor( 
         private square : Plane = new Plane(),

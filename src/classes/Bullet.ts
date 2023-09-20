@@ -1,19 +1,21 @@
 import SquareContainer from "./SquareContainer";
 import IHtmlElementInterface from "./IHtmlElementInterface";
+import Weapon from "./Weapon";
 
-export default class Bullet implements IHtmlElementInterface  {
+export default class Bullet extends Weapon implements IHtmlElementInterface  {
 
-    constructor(private coords : { x : number, y : number} = { x : 0, y : 0}, 
-        private dimensions : { width : number, height : number} = { width : 5, height : 5 },
-        private htmlElement : HTMLImageElement = document.querySelector<HTMLImageElement>('.bullet')!) {
+    constructor() {
+          super();
           
     }
 
     // Contruction de la bullet en html
-    build(container: HTMLElement): void {
+    build(container: SquareContainer): void {
+        this.htmlElement = document.querySelector<HTMLImageElement>('.bullet')!
+        let containerElt = container.getHtmlElement();
         this.htmlElement = document.createElement("img");
         this.htmlElement.classList.add("bullet");
-        this.htmlElement.src = " ../../assets/plane/missile.png"
+        this.htmlElement.src = "./assets/plane/missile.png"
         
         this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
         this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
@@ -24,14 +26,11 @@ export default class Bullet implements IHtmlElementInterface  {
         // this.dimensions.height = this.htmlElement.offsetHeight;
 
         
-        
-
-
         console.log("this before pushing", this);  // Debugging line
         SquareContainer.bulletList.push(this);
         console.log("SquareContainer after pushing", SquareContainer.bulletList);  // Debugging line
 
-        container.appendChild(this.htmlElement);
+        containerElt.appendChild(this.htmlElement);
 
         this.dimensions.width = this.htmlElement.offsetWidth;
         this.dimensions.height = this.htmlElement.offsetHeight;

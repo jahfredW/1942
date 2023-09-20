@@ -41,7 +41,7 @@ export default class Ship  implements IShipInterface {
     let containerElt = container.getHtmlElement();
     this.htmlElement = document.createElement("img");
     
-    this.htmlElement.src=  " ../../assets/cruiser/ship.png";
+    this.htmlElement.src=  "/assets/cruiser/ship.png";
     this.coords.x =  Math.floor(Math.random() * 1000) + 1; ;
     this.coords.y = 0;
 

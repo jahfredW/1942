@@ -13,7 +13,7 @@ export default class Submarine extends Ship {
 
         this.htmlElement.classList.add("rect");
 
-        this.htmlElement.src=  " ../../assets/submarine/ship.png";
+        this.htmlElement.src=  "/assets/submarine/ship.png";
         this.coords.x =  Math.floor(Math.random() * 1000) + 1; ;
         this.coords.y = 0;
 
@@ -24,8 +24,6 @@ export default class Submarine extends Ship {
 
         this.dimensions.width = this.htmlElement.offsetWidth;
         this.dimensions.height = this.htmlElement.offsetHeight; 
-    
-    
     
   }
 }
