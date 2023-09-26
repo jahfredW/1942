@@ -43,10 +43,10 @@ function gameLoop(timestamp : number) : void {
     }    
 
     for (const missile of SquareContainer.missileList) { // Assume BulletList est le tableau contenant toutes vos instances de Bullet
-        console.log(missile)
+      
         missile.seekAndDestroy(deltaTime, squareContainer, plane);
     } 
-
+    console.log(SquareContainer.missileList.length);
     // Gestion des collisions 
     Game.checkCollisions(squareContainer);
     // Mettez ici le code pour créer des bateaux, etc.

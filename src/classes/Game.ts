@@ -6,6 +6,7 @@ export default class Game {
     Game.checkOutOfScreenBullets();
     Game.checkShipOutOfScreen(container);
     Game.checkBulletAndShipCollisions();
+    Game.checkOutOfScreenMissiles(container);
 
   }
 
@@ -27,6 +28,28 @@ export default class Game {
   for ( let bullet of bulletsToRemove.reverse() ) {
     SquareContainer.bulletList[bullet].getHtmlElement().remove();
     SquareContainer.bulletList.splice(bullet, 1);
+  }
+}
+
+
+static checkOutOfScreenMissiles(squareContainer: SquareContainer) {
+  let missilesToRemove: number[] = [];
+  for (let j = 0; j < SquareContainer.missileList.length; j++) {
+    const missile = SquareContainer.missileList[j];
+    const missileRect = {
+      x: missile.getCoordX(),
+      y: missile.getCoordY(),
+      width: missile.getWidth(),
+      height: missile.getHeight(),
+    };
+    if (missileRect.y <= 1 || missileRect.y >= squareContainer.getHeight() || missileRect.x >= squareContainer.getWidth() || missileRect.x <= 0) {
+      missilesToRemove.push(j);
+    }
+  }
+
+  for ( let missile of missilesToRemove.reverse() ) {
+    SquareContainer.missileList[missile].getHtmlElement().remove();
+    SquareContainer.missileList.splice(missile, 1);
   }
 }
 
@@ -122,5 +145,6 @@ export default class Game {
       SquareContainer.bulletList[j].getHtmlElement().remove();
       SquareContainer.bulletList.splice(j, 1);
     }
+    
   }
 }

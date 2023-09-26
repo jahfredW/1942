@@ -27,7 +27,11 @@ interface squareCoords {
 //     height : number
 // } 
 
-
+/**
+ * Représente la grille de jeu, 
+ * Contient les arrays d'ennemis et de projectiles 
+ * Sous forme de tableaux statiques. 
+ */
 export default class SquareContainer implements IHtmlElementInterface {
     
     static shipList : Ship[] = [];

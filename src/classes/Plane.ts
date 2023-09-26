@@ -110,9 +110,9 @@ export default class Plane extends Shape implements IHtmlElementInterface  {
                             //     // Blob.initialY = this.coords.y;
                             // }
                             if (e.type === 'mousemove' ) {   // &Blob.isDragging
-                                
-                                const dx = e.clientX - this.coords.x;
-                                const dy = e.clientY - this.coords.y;
+                                // ici on récupère la position de la souris. 
+                                const dx = e.clientX - 20 - this.coords.x;
+                                const dy = e.clientY + 10 - this.coords.y;
                                 this.coords.x = this.coords.x + dx;
                                 this.coords.y = this.coords.y + dy;
                             }
