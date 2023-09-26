@@ -68,7 +68,7 @@ export default class Missile extends Weapon implements IHtmlElementInterface  {
     let vInit = 1;
 
     // Utilisez deltaTime pour rendre l'animation indépendante du taux de rafraîchissement
-    this.coords.y -= vInit * (deltaTime / 5);
+    this.coords.y += vInit * (deltaTime / 5);
 
     // Appliquez les limites et supprimez si nécessaire
     // if (this.coords.y < 0) {

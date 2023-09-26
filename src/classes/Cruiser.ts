@@ -1,8 +1,14 @@
 import Ship from "./Ship";
 import SquareContainer from "./SquareContainer";
+import ConcreteWeaponFactory from "./ConcreteWeaponFactory";
+import Missile from "./Missile";
 
 export default class Cruiser extends Ship {
     // Contruction du rectangle
+
+    // tableau contenant les missiles tirés par les ennemis 
+    private missileContainer : Missile[] = []
+
     constructor(){
         super();
     }
@@ -30,5 +36,15 @@ export default class Cruiser extends Ship {
     // stcokage des instances des objets dans sqaureContainer 
     
     
+  }
+
+  shoot(squareContainer: SquareContainer): void {
+    let weaponfactory = new ConcreteWeaponFactory();
+    let missile = weaponfactory.weaponCreate("missile");
+    
+    missile.setCoord(this.coords.x - 4, this.coords.y);  // Définir les coordonnées avant de construire
+    missile.build(squareContainer);
+    this.missileContainer.push(missile);
+    missile.move();
   }
 }

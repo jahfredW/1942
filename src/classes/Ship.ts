@@ -1,5 +1,8 @@
 import IShipInterface from "./IShipInterface";
 import SquareContainer from "./SquareContainer";
+import ConcreteWeaponFactory from "./ConcreteWeaponFactory";
+import Bullet from "./Bullet";
+
 
 
 /**
@@ -29,6 +32,7 @@ export default class Ship  implements IShipInterface {
         protected coords : squareCoords = { x : 250, y : 430 },
         protected htmlElement : HTMLImageElement = document.querySelector<HTMLImageElement>('.rect')!,
         protected dimensions : squareDimensions = { width : 5, height : 5},
+        protected lastShotTime : number = 0
   ) {
      
     console.log("this before pushing", this);  // Debugging line
@@ -49,6 +53,7 @@ export default class Ship  implements IShipInterface {
     this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
 
     containerElt.appendChild(this.htmlElement);
+
 
            
     this.dimensions.width = this.htmlElement.offsetWidth;
@@ -85,6 +90,16 @@ export default class Ship  implements IShipInterface {
     return this.htmlElement;
   }
 
+  //récupération de lastTimeShot
+  getLastTimeShot(): number {
+    return this.lastShotTime;
+  }
+
+  setLastTimeShot(value: number): this {
+    this.lastShotTime = value;
+    return this
+  }
+
   move(deltaTime: number = 0): void {
     let acceleration = 1;
     let vInit = 1;
@@ -110,4 +125,8 @@ export default class Ship  implements IShipInterface {
     );
 
   }
+
+  shoot(squareContainer : SquareContainer) : void {
+    
+}
 }

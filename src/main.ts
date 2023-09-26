@@ -31,6 +31,11 @@ function gameLoop(timestamp : number) : void {
     // déplacement des bateaux
     for (const ship of SquareContainer.shipList) {
         ship.move(deltaTime);
+        // Si le temps écoulé depuis le dernier tir est supérieur à 1000 ms, alors tirer
+        if (!ship.getLastTimeShot() || timestamp - ship.getLastTimeShot() >= 1000) {
+            ship.shoot(squareContainer);
+            ship.setLastTimeShot(timestamp); // Mettre à jour le moment du dernier tir
+        }
     }
     
     // déplacement des missiles
