@@ -2,6 +2,7 @@ import Ship from "./Ship";
 import SquareContainer from "./SquareContainer";
 import ConcreteWeaponFactory from "./ConcreteWeaponFactory";
 import Missile from "./Missile";
+import ShootingManager from "./ShootingManager";
 
 export default class Cruiser extends Ship {
     // Contruction du rectangle
@@ -11,6 +12,7 @@ export default class Cruiser extends Ship {
 
     constructor(){
         super();
+        this.shootingManager = new ShootingManager(1000);
     }
 
     // Surcharge de la méthode build
@@ -37,6 +39,13 @@ export default class Cruiser extends Ship {
     
     
   }
+
+  tryShoot(timestamp: number, squareContainer : SquareContainer): void {
+    if (this.shootingManager.canShoot(timestamp)) {
+        // logique de tir ici, par exemple :
+        this.shoot(squareContainer);
+    }
+    }
 
   shoot(squareContainer: SquareContainer): void {
     let weaponfactory = new ConcreteWeaponFactory();

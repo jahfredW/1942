@@ -2,6 +2,7 @@ import IShipInterface from "./IShipInterface";
 import SquareContainer from "./SquareContainer";
 import ConcreteWeaponFactory from "./ConcreteWeaponFactory";
 import Bullet from "./Bullet";
+import ShootingManager from "./ShootingManager";
 
 
 
@@ -32,13 +33,17 @@ export default class Ship  implements IShipInterface {
         protected coords : squareCoords = { x : 250, y : 430 },
         protected htmlElement : HTMLImageElement = document.querySelector<HTMLImageElement>('.rect')!,
         protected dimensions : squareDimensions = { width : 5, height : 5},
-        protected lastShotTime : number = 0
+        protected lastShotTime : number = 0,
+        protected shootingManager : ShootingManager = new ShootingManager(1000)
   ) {
      
     console.log("this before pushing", this);  // Debugging line
     SquareContainer.shipList.push(this);
     console.log("SquareContainer after pushing", SquareContainer.shipList);  // Debugging line
   }
+
+  tryShoot(time : number, squareContainer: SquareContainer)
+  {}
 
   // Contruction du rectangle
   build(container: SquareContainer): void {
