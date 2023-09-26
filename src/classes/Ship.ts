@@ -3,6 +3,7 @@ import SquareContainer from "./SquareContainer";
 import ConcreteWeaponFactory from "./ConcreteWeaponFactory";
 import Bullet from "./Bullet";
 import ShootingManager from "./ShootingManager";
+import Plane from "./Plane";
 
 
 
@@ -42,7 +43,7 @@ export default class Ship  implements IShipInterface {
     console.log("SquareContainer after pushing", SquareContainer.shipList);  // Debugging line
   }
 
-  tryShoot(time : number, squareContainer: SquareContainer)
+  tryShoot(time : number, squareContainer: SquareContainer, plane : Plane)
   {}
 
   // Contruction du rectangle
@@ -131,7 +132,7 @@ export default class Ship  implements IShipInterface {
 
   }
 
-  shoot(squareContainer : SquareContainer) : void {
+  shoot(squareContainer : SquareContainer, angle : number) : void {
     
 }
 }

@@ -1,11 +1,13 @@
 import SquareContainer from "./SquareContainer";
 import IHtmlElementInterface from "./IHtmlElementInterface";
+import Plane from "./Plane";
 
 export default class Weapon implements IHtmlElementInterface  {
 
     constructor(protected coords : { x : number, y : number} = { x : 0, y : 0}, 
         protected dimensions : { width : number, height : number} = { width : 5, height : 5 },
-        protected htmlElement : HTMLImageElement = document.querySelector<HTMLImageElement>('.bullet')!) 
+        protected htmlElement : HTMLImageElement = document.querySelector<HTMLImageElement>('.bullet')!,
+        protected angle : number = 0) 
         {
           
     }
@@ -68,8 +70,14 @@ export default class Weapon implements IHtmlElementInterface  {
         return this.dimensions.height
     }
 
+    setAngle(angle : number) : void {
+        this.angle = angle;
+    }
+
     move(deltaTime: number = 0): void {
     let vInit = 1;
+
+   
 
     // Utilisez deltaTime pour rendre l'animation indépendante du taux de rafraîchissement
     this.coords.y -= vInit * (deltaTime / 5);
@@ -89,4 +97,63 @@ export default class Weapon implements IHtmlElementInterface  {
     }
     
 }
+
+    // méthode qui permet de diriger le tir ennemi vers l'avion 
+    seekAndDestroy2(deltaTime : number, squareContainer : SquareContainer, plane : Plane){
+        let vInit = 1;
+
+        // Utilisez deltaTime pour rendre l'animation indépendante du taux de rafraîchissement
+        this.coords.y += vInit * (deltaTime / 5);
+
+        // récupérer les coordonnées de l'avion : 
+        let planeCoords = plane.getCoords();
+        let planeX = planeCoords.x;
+        let planeY = planeCoords.y;
+
+        this.moveToplanePosition(deltaTime, planeX, planeY);
+        
+    }
+
+    // dirige le tir vers les coordonnées de l'avion. 
+    seekAndDestroy(deltaTime: number, squareContainer: SquareContainer, plane: Plane) {
+     
+        let speed = 0.3;  // Vitesse du missile, à ajuster
+        this.coords.x += speed * Math.cos(this.angle) * deltaTime;
+        this.coords.y += speed * Math.sin(this.angle) * deltaTime;
+
+        if(this.htmlElement){
+            this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
+            this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
+        }
+        
+        //... autres logiques, comme la vérification de la collision
+    }
+
+    // calcul de la tangente : missiles à têtes chercheuses. 
+    moveToplanePosition(deltaTime: number = 0, planeX: number, planeY: number): void {
+        // Calculer la distance horizontale entre le bateau et l'avion
+        let dx = planeX - this.coords.x;
+        
+        // Calculer la distance verticale entre le bateau et l'avion
+        let dy = planeY - this.coords.y;
+    
+        // Calculer l'angle entre le bateau et l'avion
+        let angle = Math.atan2(dy, dx);
+    
+        // Si vous voulez utiliser deltaTime pour mettre à jour la position du bateau, 
+        // vous pouvez le faire ici en utilisant l'angle.
+        
+        // Par exemple, pour mettre à jour les coordonnées x et y:
+        let speed = 0.3;  // Vitesse du bateau, à ajuster
+        this.coords.x += speed * Math.cos(angle) * deltaTime;
+        this.coords.y += speed * Math.sin(angle) * deltaTime;
+
+         // Mettez à jour la propriété CSS
+         if(this.htmlElement){
+            this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
+            this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
+        }
+    }
+
+    
 }

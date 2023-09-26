@@ -4,6 +4,7 @@ import Weapon from "./Weapon";
 
 export default class Missile extends Weapon implements IHtmlElementInterface  {
 
+
     constructor() {
           super();
     }
@@ -62,6 +63,10 @@ export default class Missile extends Weapon implements IHtmlElementInterface  {
 
     getHeight() : number {
         return this.dimensions.height
+    }
+
+    setAngle(value : number){
+        this.angle = value;
     }
 
     move(deltaTime: number = 0): void {

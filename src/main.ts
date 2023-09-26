@@ -33,7 +33,7 @@ function gameLoop(timestamp : number) : void {
         ship.move(deltaTime);
         // Si le temps écoulé depuis le dernier tir est supérieur à 1000 ms, alors tirer
        
-        ship.tryShoot(timestamp, squareContainer); // Mettre à jour le moment du dernier tir
+        ship.tryShoot(timestamp, squareContainer, plane); // Mettre à jour le moment du dernier tir
         
     }
     
@@ -43,7 +43,8 @@ function gameLoop(timestamp : number) : void {
     }    
 
     for (const missile of SquareContainer.missileList) { // Assume BulletList est le tableau contenant toutes vos instances de Bullet
-        missile.move(deltaTime);
+        console.log(missile)
+        missile.seekAndDestroy(deltaTime, squareContainer, plane);
     } 
 
     // Gestion des collisions 

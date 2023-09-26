@@ -9,8 +9,8 @@ export default class SpawnManager {
     // private accumulatedTime: number = 0;
     private nextSpawnTime: { [key: string]: number } = {};
     private shipSpawnRate: { [key: string]: number } = {
-      'cruiser': 6000,
-      'submarine': 3000,
+      'cruiser': 3000,
+      'submarine': 8000,
       // Ajoutez d'autres types de bateaux ici
     };
     private shipTypes: string[] = ['cruiser', 'submarine'];

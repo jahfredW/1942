@@ -3,6 +3,7 @@ import SquareContainer from "./SquareContainer";
 import ConcreteWeaponFactory from "./ConcreteWeaponFactory";
 import Missile from "./Missile";
 import ShootingManager from "./ShootingManager";
+import Plane from "./Plane";
 
 export default class Cruiser extends Ship {
     // Contruction du rectangle
@@ -40,20 +41,26 @@ export default class Cruiser extends Ship {
     
   }
 
-  tryShoot(timestamp: number, squareContainer : SquareContainer): void {
+  tryShoot(timestamp: number, squareContainer : SquareContainer, plane : Plane): void {
     if (this.shootingManager.canShoot(timestamp)) {
         // logique de tir ici, par exemple :
-        this.shoot(squareContainer);
+        let dx = plane.getCoords().x - this.getCoordX(); // suppose que `this.x` et `this.y` sont les coordonnées du navire
+        let dy = plane.getCoords().y - this.getCoordY();
+        let angle = Math.atan2(dy, dx);
+        console.log("angle", angle)
+
+
+        this.shoot(squareContainer, angle);
     }
     }
 
-  shoot(squareContainer: SquareContainer): void {
+  shoot(squareContainer: SquareContainer, angle : number): void {
     let weaponfactory = new ConcreteWeaponFactory();
     let missile = weaponfactory.weaponCreate("missile");
-    
+    missile.setAngle(angle);
     missile.setCoord(this.coords.x - 4, this.coords.y);  // Définir les coordonnées avant de construire
     missile.build(squareContainer);
     this.missileContainer.push(missile);
-    missile.move();
+
   }
 }
