@@ -13,7 +13,8 @@ export default class Cruiser extends Ship {
 
     constructor(){
         super();
-        this.shootingManager = new ShootingManager(1000);
+        // Ici on configure le taux de rechargement du tir à l'aide du shooting manager
+        this.shootingManager = new ShootingManager(500);
     }
 
     // Surcharge de la méthode build
@@ -50,17 +51,18 @@ export default class Cruiser extends Ship {
         console.log("angle", angle)
 
 
-        this.shoot(squareContainer, angle);
+        this.shoot(squareContainer, angle, timestamp);
     }
     }
 
-  shoot(squareContainer: SquareContainer, angle : number): void {
+  shoot(squareContainer: SquareContainer, angle : number, timeStamp: number): void {
     let weaponfactory = new ConcreteWeaponFactory();
     let missile = weaponfactory.weaponCreate("missile");
     missile.setAngle(angle);
     missile.setCoord(this.coords.x - 4, this.coords.y);  // Définir les coordonnées avant de construire
     missile.build(squareContainer);
-    this.missileContainer.push(missile);
+    missile.setTimeStamp(timeStamp);
+    
 
   }
 }

@@ -150,3 +150,12 @@ h1 {
     top: var(--y-position);
     border-radius: 100%;
 }
+
+.subMissile {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    left: var(--x-position);
+    top: var(--y-position);
+    border-radius: 100%;
+  }

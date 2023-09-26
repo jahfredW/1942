@@ -1,8 +1,9 @@
 import SquareContainer from "./SquareContainer";
+import ShootingManager from "./ShootingManager";
 
 export default class Game {
 
-  static checkCollisions(container: SquareContainer){
+  static checkCollisions(timestamp: number, container: SquareContainer){
     Game.checkOutOfScreenBullets();
     Game.checkShipOutOfScreen(container);
     Game.checkBulletAndShipCollisions();
@@ -42,7 +43,8 @@ static checkOutOfScreenMissiles(squareContainer: SquareContainer) {
       width: missile.getWidth(),
       height: missile.getHeight(),
     };
-    if (missileRect.y <= 1 || missileRect.y >= squareContainer.getHeight() || missileRect.x >= squareContainer.getWidth() || missileRect.x <= 0) {
+    if (missileRect.y <= 1 || missileRect.y >= squareContainer.getHeight() || missileRect.x >= squareContainer.getWidth() || missileRect.x <= 0
+   ) {
       missilesToRemove.push(j);
     }
   }

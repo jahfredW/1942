@@ -2,8 +2,7 @@ import SquareContainer from "./SquareContainer";
 import IHtmlElementInterface from "./IHtmlElementInterface";
 import Weapon from "./Weapon";
 
-export default class Missile extends Weapon implements IHtmlElementInterface  {
-
+export default class SubMissile extends Weapon implements IHtmlElementInterface  {
 
     constructor() {
           super();
@@ -14,13 +13,13 @@ export default class Missile extends Weapon implements IHtmlElementInterface  {
         this.htmlElement = document.querySelector<HTMLImageElement>('.missile')!
         let containerElt = container.getHtmlElement();
         this.htmlElement = document.createElement("img");
-        this.htmlElement.classList.add("missile");
-        this.htmlElement.src = "/assets/SpaceGame/Projectiles/MachineGun01.png"
+        this.htmlElement.classList.add("subMissile");
+        this.htmlElement.src = "/assets/bullet4.png"
         
         this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
         this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
 
-        this.ttl = 6000;
+        this.ttl = 3000;
         
 
         // dimensions qui viennent du DOM, à récupérer après l'injection dans le DOM !!!!
@@ -28,6 +27,7 @@ export default class Missile extends Weapon implements IHtmlElementInterface  {
         // this.dimensions.height = this.htmlElement.offsetHeight;
 
         SquareContainer.missileList.push(this);
+        
 
         containerElt.appendChild(this.htmlElement);
 
@@ -68,13 +68,22 @@ export default class Missile extends Weapon implements IHtmlElementInterface  {
         this.angle = value;
     }
 
+    
+
     move(deltaTime: number = 0): void {
     let vInit = 1;
 
     // Utilisez deltaTime pour rendre l'animation indépendante du taux de rafraîchissement
     this.coords.y += vInit * (deltaTime / 5);
 
+    // Appliquez les limites et supprimez si nécessaire
+    // if (this.coords.y < 0) {
+    //     this.htmlElement.classList.add("off");
+    //     this.htmlElement.remove();
+        
+        // Supprimez cette instance de Bullet du tableau BulletList
     
+
     // Mettez à jour la propriété CSS
     if(this.htmlElement){
         this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);

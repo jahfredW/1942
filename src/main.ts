@@ -4,11 +4,16 @@ import Plane  from './classes/Plane';
 import SpawnManager  from './classes/SpawnManager';
 
 import Game  from './classes/Game';
+import SubMissile from './classes/SubMissile';
+
+
 
 // Instanciation des éléments 
 
 const plane = new Plane();
 const squareContainer = new SquareContainer();
+
+
 plane.build(squareContainer);
 
 // récupération des éléments HTML correspondants à la classe
@@ -43,12 +48,17 @@ function gameLoop(timestamp : number) : void {
     }    
 
     for (const missile of SquareContainer.missileList) { // Assume BulletList est le tableau contenant toutes vos instances de Bullet
-      
-        missile.seekAndDestroy(deltaTime, squareContainer, plane);
+        if (missile instanceof SubMissile){
+            missile.seekAndDestroy2(deltaTime, squareContainer, plane);
+        } else {
+            missile.seekAndDestroy(deltaTime, squareContainer, plane);
+        }
+        missile.checkTTL(timestamp);
+        
     } 
     console.log(SquareContainer.missileList.length);
     // Gestion des collisions 
-    Game.checkCollisions(squareContainer);
+    Game.checkCollisions(timestamp, squareContainer);
     // Mettez ici le code pour créer des bateaux, etc.
     // Vous pouvez utiliser deltaTime pour ajuster le timing
   

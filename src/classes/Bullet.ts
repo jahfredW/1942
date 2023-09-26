@@ -2,6 +2,9 @@ import SquareContainer from "./SquareContainer";
 import IHtmlElementInterface from "./IHtmlElementInterface";
 import Weapon from "./Weapon";
 
+/**
+ * Classe représentant l'arme de l'avion
+ */
 export default class Bullet extends Weapon implements IHtmlElementInterface  {
 
     constructor() {
@@ -26,9 +29,9 @@ export default class Bullet extends Weapon implements IHtmlElementInterface  {
         // this.dimensions.height = this.htmlElement.offsetHeight;
 
         
-        console.log("this before pushing", this);  // Debugging line
+        // ajout des bullets au tableau global. 
         SquareContainer.bulletList.push(this);
-        console.log("SquareContainer after pushing", SquareContainer.bulletList);  // Debugging line
+        
 
         containerElt.appendChild(this.htmlElement);
 
@@ -65,21 +68,15 @@ export default class Bullet extends Weapon implements IHtmlElementInterface  {
         return this.dimensions.height
     }
 
+    // méthode censée ajouter un peu de vent 
+    // A approfondir par la suite. 
     move(deltaTime: number = 0): void {
     let vInit = 1;
 
     // Utilisez deltaTime pour rendre l'animation indépendante du taux de rafraîchissement
     this.coords.y -= vInit * (deltaTime / 5);
 
-    // Appliquez les limites et supprimez si nécessaire
-    // if (this.coords.y < 0) {
-    //     this.htmlElement.classList.add("off");
-    //     this.htmlElement.remove();
-        
-        // Supprimez cette instance de Bullet du tableau BulletList
-    
-
-    // Mettez à jour la propriété CSS
+    // Mettez à jour la propriété CSS ! TRES IMPORTANT 
     if(this.htmlElement){
         this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
         this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);

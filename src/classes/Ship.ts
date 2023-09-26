@@ -132,7 +132,7 @@ export default class Ship  implements IShipInterface {
 
   }
 
-  shoot(squareContainer : SquareContainer, angle : number) : void {
+  shoot(squareContainer : SquareContainer, angle : number, timeStamp : number) : void {
     
 }
 }

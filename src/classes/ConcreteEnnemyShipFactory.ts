@@ -3,6 +3,9 @@ import Ship from "./Ship";
 import Submarine from "./Submarine";
 import Cruiser from "./Cruiser";
 
+/**
+ * 
+ */
 export default class ConcreteEnnemyShipFactory extends ShipFactory {
     shipCreate(ship_type: string): Ship {
         if (ship_type === "cruiser") {

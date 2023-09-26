@@ -7,7 +7,9 @@ export default class Weapon implements IHtmlElementInterface  {
     constructor(protected coords : { x : number, y : number} = { x : 0, y : 0}, 
         protected dimensions : { width : number, height : number} = { width : 5, height : 5 },
         protected htmlElement : HTMLImageElement = document.querySelector<HTMLImageElement>('.bullet')!,
-        protected angle : number = 0) 
+        protected angle : number = 0,
+        protected ttl : number = 0,
+        protected timeStamp : number = 0) 
         {
           
     }
@@ -74,13 +76,49 @@ export default class Weapon implements IHtmlElementInterface  {
         this.angle = angle;
     }
 
+    setTimeStamp(value : number) : void {
+        this.timeStamp = value;
+    }
+
+    setTtl(value : number) : void {
+        this.ttl = value;
+    }
+
+    destroy() {
+        // Supprimez l'élément HTML associé à cette arme
+        console.log("destroy");
+        if (this.htmlElement) {
+            console.log('remove', this.htmlElement);
+            this.htmlElement.remove();
+        }
+        
+        // Supprimez cette instance de Weapon de tous les tableaux ou structures de données
+        // qui la contiennent (par exemple, vous pourriez avoir un tableau de toutes les armes actuellement actives)
+        const index = SquareContainer.missileList.indexOf(this);
+        if (index > -1) {
+            SquareContainer.missileList.splice(index, 1);
+        }
+
+        // … effectuez ici tout autre nettoyage nécessaire …
+    }
+
+// Dans cette méthode, this.htmlElement.remove() supprime l'élément HTML associé de la page, et le code qui suit supprime l'instance de l'objet Weapon du tableau bulletList pour s'assurer qu'il ne continue pas à être mis à jour ou rendu après sa destruction. Vous devrez peut-être adapter ces détails pour correspondre à la structure exacte et aux noms de votre projet.
+
+
+
+
+
+
+
     move(deltaTime: number = 0): void {
     let vInit = 1;
+
+    
 
    
 
     // Utilisez deltaTime pour rendre l'animation indépendante du taux de rafraîchissement
-    this.coords.y -= vInit * (deltaTime / 5);
+    this.coords.x += vInit * (deltaTime / 5);
 
     // Appliquez les limites et supprimez si nécessaire
     // if (this.coords.y < 0) {
@@ -103,7 +141,7 @@ export default class Weapon implements IHtmlElementInterface  {
         let vInit = 1;
 
         // Utilisez deltaTime pour rendre l'animation indépendante du taux de rafraîchissement
-        this.coords.y += vInit * (deltaTime / 5);
+        // this.coords.y += vInit * (deltaTime / 5);
 
         // récupérer les coordonnées de l'avion : 
         let planeCoords = plane.getCoords();
@@ -154,6 +192,15 @@ export default class Weapon implements IHtmlElementInterface  {
             this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
         }
     }
+
+    checkTTL(timeStamp: number){
+        console.log("timeStamp", timeStamp);
+        console.log("timeStamp missile", this.timeStamp);
+        console.log("this.ttl:", this.ttl);
+        if(timeStamp - this.timeStamp > this.ttl){
+            this.destroy();
+        }
+    }   
 
     
 }
