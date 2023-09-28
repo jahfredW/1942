@@ -1,8 +1,8 @@
 import Bullet from "./Bullet";
 import Shape  from "./Shape";
-import SquareContainer from "./SquareContainer";
-import IHtmlElementInterface from "./IHtmlElementInterface";
-import ConcreteWeaponFactory from "./ConcreteWeaponFactory";
+import SquareContainer from "../SquareContainer";
+import IHtmlElementInterface from "../Interfaces/IHtmlElementInterface";
+import ConcreteWeaponFactory from "../Factories/ConcreteWeaponFactory";
 
 
 /**
@@ -52,6 +52,10 @@ export default class Plane extends Shape implements IHtmlElementInterface  {
 
     getWidth(): number {
         return this.htmlElement.width;
+    }
+
+    getHeight(): number {
+        return this.htmlElement.height;
     }
 
     shoot(squareContainer : SquareContainer) : void {

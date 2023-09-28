@@ -1,8 +1,8 @@
-import IShipInterface from "./IShipInterface";
-import SquareContainer from "./SquareContainer";
-import ConcreteWeaponFactory from "./ConcreteWeaponFactory";
+import IShipInterface from "../Interfaces/IShipInterface";
+import SquareContainer from "../SquareContainer";
+import ConcreteWeaponFactory from "../Factories/ConcreteWeaponFactory";
 import Bullet from "./Bullet";
-import ShootingManager from "./ShootingManager";
+import ShootingManager from "../Managers/ShootingManager";
 import Plane from "./Plane";
 
 

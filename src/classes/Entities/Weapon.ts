@@ -1,5 +1,5 @@
-import SquareContainer from "./SquareContainer";
-import IHtmlElementInterface from "./IHtmlElementInterface";
+import SquareContainer from "../SquareContainer";
+import IHtmlElementInterface from "../Interfaces/IHtmlElementInterface";
 import Plane from "./Plane";
 
 export default class Weapon implements IHtmlElementInterface  {

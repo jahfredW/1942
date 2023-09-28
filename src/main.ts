@@ -1,10 +1,10 @@
 import SquareContainer from './classes/SquareContainer';
 
-import Plane  from './classes/Plane';
-import SpawnManager  from './classes/SpawnManager';
+import Plane  from './classes/Entities/Plane';
+import SpawnManager  from './classes/Managers/SpawnManager';
 
 import Game  from './classes/Game';
-import SubMissile from './classes/SubMissile';
+import SubMissile from './classes/Entities/SubMissile';
 
 
 
@@ -58,7 +58,7 @@ function gameLoop(timestamp : number) : void {
     } 
     console.log(SquareContainer.missileList.length);
     // Gestion des collisions 
-    Game.checkCollisions(timestamp, squareContainer);
+    Game.checkCollisions(timestamp, squareContainer, plane);
     // Mettez ici le code pour créer des bateaux, etc.
     // Vous pouvez utiliser deltaTime pour ajuster le timing
   

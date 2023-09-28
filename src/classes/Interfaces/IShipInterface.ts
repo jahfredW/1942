@@ -1,4 +1,4 @@
-import SquareContainer from "./SquareContainer";
+import SquareContainer from "../SquareContainer";
 
 /**
  * Interface pour la construction des bateaux 

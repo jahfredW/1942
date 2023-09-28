@@ -1,8 +1,8 @@
 import WeaponFactory from "./WeaponFactory";
-import Missile from "./Missile";
-import Bullet from "./Bullet";
-import Weapon from "./Weapon";
-import SubMissile from "./SubMissile";
+import Missile from "../Entities/Missile";
+import Bullet from "../Entities/Bullet";
+import Weapon from "../Entities/Weapon";
+import SubMissile from "../Entities/SubMissile";
 
 /**
  * classe Factory qui sert à instancier les nouvelles armes 

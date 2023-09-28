@@ -1,8 +1,8 @@
-import Bullet  from "./Bullet";
-import Missile  from "./Missile";
-import Ship from "./Ship";
-import Plane from "./Plane";
-import IHtmlElementInterface from "./IHtmlElementInterface";
+import Bullet  from "./Entities/Bullet";
+import Missile  from "./Entities/Missile";
+import Ship from "./Entities/Ship";
+import Plane from "./Entities/Plane";
+import IHtmlElementInterface from "./Interfaces/IHtmlElementInterface";
 
 
 interface ContainerCoords {

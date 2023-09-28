@@ -1,5 +1,5 @@
-import SquareContainer from "./SquareContainer";
-import Weapon from "./Weapon";
+import SquareContainer from "../SquareContainer";
+import Weapon from "../Entities/Weapon";
 
 export default abstract class WeaponFactory {
 

@@ -1,4 +1,4 @@
-import SubMissile from "./SubMissile";
+import SubMissile from "../Entities/SubMissile";
 
 export default class ShootingManager {
     private lastShotTime: number = 0;

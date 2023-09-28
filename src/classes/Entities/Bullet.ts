@@ -1,32 +1,36 @@
-import SquareContainer from "./SquareContainer";
-import IHtmlElementInterface from "./IHtmlElementInterface";
+import SquareContainer from "../SquareContainer";
+import IHtmlElementInterface from "../Interfaces/IHtmlElementInterface";
 import Weapon from "./Weapon";
 
-export default class SubMissile extends Weapon implements IHtmlElementInterface  {
+/**
+ * Classe représentant l'arme de l'avion
+ */
+export default class Bullet extends Weapon implements IHtmlElementInterface  {
 
     constructor() {
           super();
+          
     }
 
     // Contruction de la bullet en html
     build(container: SquareContainer): void {
-        this.htmlElement = document.querySelector<HTMLImageElement>('.missile')!
+        this.htmlElement = document.querySelector<HTMLImageElement>('.bullet')!
         let containerElt = container.getHtmlElement();
         this.htmlElement = document.createElement("img");
-        this.htmlElement.classList.add("subMissile");
-        this.htmlElement.src = "/assets/bullet4.png"
+        this.htmlElement.classList.add("bullet");
+        this.htmlElement.src = "./assets/plane/missile.png"
         
         this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
         this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
-
-        this.ttl = 3000;
         
 
         // dimensions qui viennent du DOM, à récupérer après l'injection dans le DOM !!!!
         // this.dimensions.width = this.htmlElement.offsetWidth;
         // this.dimensions.height = this.htmlElement.offsetHeight;
 
-        SquareContainer.missileList.push(this);
+        
+        // ajout des bullets au tableau global. 
+        SquareContainer.bulletList.push(this);
         
 
         containerElt.appendChild(this.htmlElement);
@@ -64,27 +68,15 @@ export default class SubMissile extends Weapon implements IHtmlElementInterface 
         return this.dimensions.height
     }
 
-    setAngle(value : number){
-        this.angle = value;
-    }
-
-    
-
+    // méthode censée ajouter un peu de vent 
+    // A approfondir par la suite. 
     move(deltaTime: number = 0): void {
     let vInit = 1;
 
     // Utilisez deltaTime pour rendre l'animation indépendante du taux de rafraîchissement
-    this.coords.y += vInit * (deltaTime / 5);
+    this.coords.y -= vInit * (deltaTime / 5);
 
-    // Appliquez les limites et supprimez si nécessaire
-    // if (this.coords.y < 0) {
-    //     this.htmlElement.classList.add("off");
-    //     this.htmlElement.remove();
-        
-        // Supprimez cette instance de Bullet du tableau BulletList
-    
-
-    // Mettez à jour la propriété CSS
+    // Mettez à jour la propriété CSS ! TRES IMPORTANT 
     if(this.htmlElement){
         this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
         this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);

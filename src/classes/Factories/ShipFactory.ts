@@ -1,5 +1,5 @@
-import SquareContainer from "./SquareContainer";
-import Ship from "./Ship";
+import SquareContainer from "../SquareContainer";
+import Ship from "../Entities/Ship";
 
 export default abstract class ShipFactory {
 

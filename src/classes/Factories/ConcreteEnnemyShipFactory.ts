@@ -1,7 +1,7 @@
 import ShipFactory from "./ShipFactory";
-import Ship from "./Ship";
-import Submarine from "./Submarine";
-import Cruiser from "./Cruiser";
+import Ship from "../Entities/Ship";
+import Submarine from "../Entities/Submarine";
+import Cruiser from "../Entities/Cruiser";
 
 /**
  * 

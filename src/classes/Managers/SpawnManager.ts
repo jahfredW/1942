@@ -1,5 +1,5 @@
-import SquareContainer from "./SquareContainer";
-import ConcreteEnnemyShipFactory from "./ConcreteEnnemyShipFactory";
+import SquareContainer from "../SquareContainer";
+import ConcreteEnnemyShipFactory from "../Factories/ConcreteEnnemyShipFactory";
 
 /**
  * permet de spawn les ennenies à intervales de temps définis
