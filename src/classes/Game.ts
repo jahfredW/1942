@@ -177,9 +177,9 @@ export default class Game {
       // Vérifier si une collision a lieu
       else if (
         planeHtml.x < missileHtml.x + missileHtml.width &&
-        planeHtml.x + planeHtml.width > missileHtml.x &&
+        planeHtml.x + (planeHtml.width + planeHtml.width * 0.05) > missileHtml.x &&
         planeHtml.y < missileHtml.y + missileHtml.height &&
-        planeHtml.y + planeHtml.height > missileHtml.y
+        planeHtml.y + (planeHtml.height + planeHtml.height * 0.05) > missileHtml.y
       ) {
         // Collision détectée, marquer le ship et la bullet pour suppression
         console.log("hit");
