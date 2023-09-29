@@ -14,7 +14,7 @@ export default class Cruiser extends Ship {
     constructor(){
         super();
         // Ici on configure le taux de rechargement du tir à l'aide du shooting manager
-        this.shootingManager = new ShootingManager(500);
+        this.shootingManager = new ShootingManager(1000);
     }
 
     // Surcharge de la méthode build
@@ -25,7 +25,7 @@ export default class Cruiser extends Ship {
         this.htmlElement.classList.add("rect");
 
         this.htmlElement.src =  "/assets/cruiser/ship.png";
-        this.coords.x =  Math.floor(Math.random() * 1000) + 1; ;
+        this.coords.x =  (Math.floor(Math.random() * container.getWidth()) + 1); 
         this.coords.y = 0;
 
         this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
@@ -35,9 +35,9 @@ export default class Cruiser extends Ship {
 
         this.dimensions.width = this.htmlElement.offsetWidth;
         this.dimensions.height = this.htmlElement.offsetHeight;
+
+        console.log("dimensions conteneur", container.getWidth(), container.getHeight());
         
-        console.log(getComputedStyle(this.htmlElement).getPropertyValue("width"));
-    // stcokage des instances des objets dans sqaureContainer 
     
     
   }
@@ -48,7 +48,7 @@ export default class Cruiser extends Ship {
         let dx = plane.getCoords().x - this.getCoordX(); // suppose que `this.x` et `this.y` sont les coordonnées du navire
         let dy = plane.getCoords().y - this.getCoordY();
         let angle = Math.atan2(dy, dx);
-        console.log("angle", angle)
+     
 
 
         this.shoot(squareContainer, angle, timestamp);

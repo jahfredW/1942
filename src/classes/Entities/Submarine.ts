@@ -23,7 +23,7 @@ export default class Submarine extends Ship {
         this.htmlElement.classList.add("rect");
 
         this.htmlElement.src=  "/assets/submarine/ship.png";
-        this.coords.x =  Math.floor(Math.random() * 1000) + 1; ;
+        this.coords.x =  Math.floor(Math.random() * container.getWidth()) + 1; 
         this.coords.y = 0;
 
         this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
@@ -49,7 +49,6 @@ export default class Submarine extends Ship {
         let dx = plane.getCoords().x - this.getCoordX(); // suppose que `this.x` et `this.y` sont les coordonnées du navire
         let dy = plane.getCoords().y - this.getCoordY();
         let angle = Math.atan2(dy, dx);
-        console.log("angle", angle)
 
 
         this.shoot(squareContainer, angle, timestamp);

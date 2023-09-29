@@ -86,9 +86,7 @@ export default class Weapon implements IHtmlElementInterface  {
 
     destroy() {
         // Supprimez l'élément HTML associé à cette arme
-        console.log("destroy");
         if (this.htmlElement) {
-            console.log('remove', this.htmlElement);
             this.htmlElement.remove();
         }
         
@@ -194,9 +192,6 @@ export default class Weapon implements IHtmlElementInterface  {
     }
 
     checkTTL(timeStamp: number){
-        console.log("timeStamp", timeStamp);
-        console.log("timeStamp missile", this.timeStamp);
-        console.log("this.ttl:", this.ttl);
         if(timeStamp - this.timeStamp > this.ttl){
             this.destroy();
         }

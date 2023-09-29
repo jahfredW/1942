@@ -10,7 +10,7 @@ export default class SpawnManager {
     private nextSpawnTime: { [key: string]: number } = {};
     private shipSpawnRate: { [key: string]: number } = {
       'cruiser': 3000,
-      'submarine': 8000,
+      'submarine': 5000,
       // Ajoutez d'autres types de bateaux ici
     };
     private shipTypes: string[] = ['cruiser', 'submarine'];
@@ -43,7 +43,6 @@ export default class SpawnManager {
 
             if (this.nextSpawnTime[shipType] <= 0) {
                 // si le temps de res est egale à 0, on produit le bateau 
-                console.log("Spawning", shipType);
                 // on réinitialise le temps de respawn 
                 this.nextSpawnTime[shipType] = this.shipSpawnRate[shipType];
                 const shipFactory = new ConcreteEnnemyShipFactory();

@@ -151,7 +151,7 @@ export default class Game {
   ) {
     let missilesToRemove = [];
     let missileList = SquareContainer.missileList;
-    console.log("liste des missiles", missileList);
+  
 
     // récupération des caractéristiques HTML de l'avion .
     const planeHtml = {
@@ -176,10 +176,10 @@ export default class Game {
 
       // Vérifier si une collision a lieu
       else if (
-        planeHtml.x < missileHtml.x + missileHtml.width &&
-        planeHtml.x + (planeHtml.width + planeHtml.width * 0.05) > missileHtml.x &&
-        planeHtml.y < missileHtml.y + missileHtml.height &&
-        planeHtml.y + (planeHtml.height + planeHtml.height * 0.05) > missileHtml.y
+        planeHtml.x < missileHtml.x + ( missileHtml.width - missileHtml.width * 0.5) &&
+        planeHtml.x + (planeHtml.width - planeHtml.width * 0.5) > missileHtml.x &&
+        planeHtml.y < missileHtml.y + ( missileHtml.height - missileHtml.height * 0.5) &&
+        planeHtml.y + (planeHtml.height + planeHtml.height * 0.5) > missileHtml.y
       ) {
         // Collision détectée, marquer le ship et la bullet pour suppression
         console.log("hit");

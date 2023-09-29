@@ -56,7 +56,6 @@ function gameLoop(timestamp : number) : void {
         missile.checkTTL(timestamp);
         
     } 
-    console.log(SquareContainer.missileList.length);
     // Gestion des collisions 
     Game.checkCollisions(timestamp, squareContainer, plane);
     // Mettez ici le code pour créer des bateaux, etc.
@@ -101,6 +100,25 @@ document.addEventListener('keydown', (e) => plane.moveSquare(e, null, squareCont
 document.addEventListener('mousedown', (e) => plane.moveSquare(e, null, squareContainer));
 document.addEventListener('mousemove', (e) => plane.moveSquare(e, null, squareContainer));
 document.addEventListener('mouseup', (e) => plane.moveSquare(e, null, squareContainer));
+
+// on met un eventListener de resize sur le conteneur pour mettre à jours ses dimensions en temps réel 
+const element = squareContainer.getHtmlElement();
+if(element) {
+  const resizeObserver = new ResizeObserver(entries => {
+    let container_height = entries[0].contentRect.height;
+    let container_width = entries[0].contentRect.width;
+
+    squareContainer.setWidth(container_width);
+    squareContainer.setHeight(container_height);
+    // for (let entry of entries) {
+    //   // Vous pouvez inspecter 'entry' pour plus d'informations sur les changements de taille.
+    //   console.log(entry.contentRect.width, entry.contentRect.height);
+    // }
+  });
+  resizeObserver.observe(element);
+}
+
+
 
 
 

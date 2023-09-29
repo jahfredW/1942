@@ -41,7 +41,7 @@
         overflow: hidden;
         position: relative;
         border: 1px solid blueviolet;
-        min-height: 500px;
+        min-height: 80vh;
         margin-bottom: 20px;
     }
 }
@@ -80,6 +80,7 @@ h1 {
     position: absolute;
     width: 35px;
     height: 40px;
+    border: 1px solid black;
     left: var(--x-position);
     top: var(--y-position);
     
@@ -139,6 +140,7 @@ h1 {
     left: var(--x-position);
     top: var(--y-position);
     border-radius: 100%;
+    border: 1px solid black;
 }
 
 .missile {
@@ -149,13 +151,15 @@ h1 {
     left: var(--x-position);
     top: var(--y-position);
     border-radius: 100%;
+    border: 1px solid black;
 }
 
 .subMissile {
     position: absolute;
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     left: var(--x-position);
     top: var(--y-position);
     border-radius: 100%;
+    border: 1px solid black;
   }

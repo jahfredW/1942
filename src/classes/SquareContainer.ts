@@ -42,8 +42,8 @@ export default class SquareContainer implements IHtmlElementInterface {
         private square : Plane = new Plane(),
         private coords : ContainerCoords = {x:0,y:0},
         private htmlElement : HTMLElement = document.querySelector('.container__square')!,
-        private width : number = htmlElement.offsetWidth,
-        private height : number = htmlElement.offsetHeight
+        private width : number = htmlElement.clientWidth,
+        private height : number = htmlElement.clientHeight
         
         ) {
            
@@ -51,8 +51,8 @@ export default class SquareContainer implements IHtmlElementInterface {
 
 
     init(){
-        this.height = this.htmlElement.offsetHeight;
-        this.width = this.htmlElement.offsetWidth;
+        this.height = this.htmlElement.clientHeight;
+        this.width = this.htmlElement.clientWidth;
     }
 
     getWidth(){
@@ -61,6 +61,14 @@ export default class SquareContainer implements IHtmlElementInterface {
 
     getHeight(){
         return this.height;
+    }
+
+    setWidth(newWidth : number){
+        this.width = newWidth;
+    }
+
+    setHeight(newHeight : number){
+        this.height = newHeight;
     }
 
     getCoords() : ContainerCoords {

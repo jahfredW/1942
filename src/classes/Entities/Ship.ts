@@ -38,9 +38,9 @@ export default class Ship  implements IShipInterface {
         protected shootingManager : ShootingManager = new ShootingManager(1000)
   ) {
      
-    console.log("this before pushing", this);  // Debugging line
+    
     SquareContainer.shipList.push(this);
-    console.log("SquareContainer after pushing", SquareContainer.shipList);  // Debugging line
+    
   }
 
   tryShoot(time : number, squareContainer: SquareContainer, plane : Plane)
@@ -52,7 +52,7 @@ export default class Ship  implements IShipInterface {
     this.htmlElement = document.createElement("img");
     
     this.htmlElement.src=  "/assets/cruiser/ship.png";
-    this.coords.x =  Math.floor(Math.random() * 1000) + 1; ;
+    this.coords.x =  Math.floor(Math.random() * container.getWidth()) + 1; 
     this.coords.y = 0;
 
     this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
@@ -60,10 +60,10 @@ export default class Ship  implements IShipInterface {
 
     containerElt.appendChild(this.htmlElement);
 
-
-           
     this.dimensions.width = this.htmlElement.offsetWidth;
     this.dimensions.height = this.htmlElement.offsetHeight;
+
+    console.log("dimensions conteneur", container.getWidth(), container.getHeight());
 
   }
 
