@@ -81,8 +81,11 @@ export default class Game {
     }
 
     for (let i of shipsToRemove) {
-      SquareContainer.shipList[i].getHtmlElement().remove();
-      SquareContainer.shipList.splice(i, 1);
+      if (SquareContainer.shipList[i]){
+        SquareContainer.shipList[i].getHtmlElement().remove();
+        SquareContainer.shipList.splice(i, 1);
+      }
+      
     }
   }
 
@@ -135,12 +138,18 @@ export default class Game {
 
     // Supprimer les éléments marqués
     for (let i of shipsToRemove.reverse()) {
-      SquareContainer.shipList[i].getHtmlElement().remove();
-      SquareContainer.shipList.splice(i, 1);
+      if (SquareContainer.shipList[i]){
+        SquareContainer.shipList[i].getHtmlElement().remove();
+        SquareContainer.shipList.splice(i, 1);
+      }
+      
     }
     for (let j of bulletsToRemove.reverse()) {
-      SquareContainer.bulletList[j].getHtmlElement().remove();
-      SquareContainer.bulletList.splice(j, 1);
+      if (SquareContainer.shipList[j]){
+        SquareContainer.bulletList[j].getHtmlElement().remove();
+        SquareContainer.bulletList.splice(j, 1);
+      }
+      
     }
   }
 
@@ -188,8 +197,11 @@ export default class Game {
     }
     // suppression des missiels de leur conteneur ( reverse )
     for (let i of missilesToRemove.reverse()) {
-      SquareContainer.missileList[i].getHtmlElement().remove();
-      SquareContainer.missileList.splice(i, 1);
+      if(SquareContainer.missileList[i]){
+        SquareContainer.missileList[i].getHtmlElement().remove();
+        SquareContainer.missileList.splice(i, 1);
+      }
+      
     }
   }
 }

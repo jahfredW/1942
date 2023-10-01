@@ -101,6 +101,14 @@ document.addEventListener('mousedown', (e) => plane.moveSquare(e, null, squareCo
 document.addEventListener('mousemove', (e) => plane.moveSquare(e, null, squareContainer));
 document.addEventListener('mouseup', (e) => plane.moveSquare(e, null, squareContainer));
 
+// evts bindés sur l'avion pour le mode mobile. 
+plane.getHtmlElement().addEventListener('touchstart', (e) => plane.moveSquare(e, null, squareContainer));
+document.addEventListener('touchstart', (e) => plane.moveSquare(e, null, squareContainer));
+plane.getHtmlElement().addEventListener('touchmove', (e) => plane.moveSquare(e, null, squareContainer));
+
+// plus tard ajout du gyroscope.
+window.addEventListener('deviceorientation', (e) => plane.moveSquare(e, null, squareContainer));
+
 // on met un eventListener de resize sur le conteneur pour mettre à jours ses dimensions en temps réel 
 const element = squareContainer.getHtmlElement();
 if(element) {

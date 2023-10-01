@@ -3,6 +3,7 @@ import Shape  from "./Shape";
 import SquareContainer from "../SquareContainer";
 import IHtmlElementInterface from "../Interfaces/IHtmlElementInterface";
 import ConcreteWeaponFactory from "../Factories/ConcreteWeaponFactory";
+import Orientation from '../Gameplay/Orientation';
 
 
 /**
@@ -23,15 +24,23 @@ export default class Plane extends Shape implements IHtmlElementInterface  {
     static initialX = 0; 
     static initialY = 0;
 
+    private orientation : Orientation; // orientation de la device
+    private neutralOrientation : Orientation// remise à zéro de l'oritentation
+    
+
 
     constructor(
         
-        private bulletContainer : Bullet[] = [] // tableau d'objets bullets
+        private bulletContainer : Bullet[] = [], // tableau d'objets bullets
+        
+        
         
     ){  
         super();
         // this.bullet = new Bullet(super.coords);  
         this.htmlElement = document.createElement('img');
+        this.neutralOrientation = new Orientation();
+        this.orientation = new Orientation();
         // this.animateSquare();
     }
     
@@ -48,6 +57,21 @@ export default class Plane extends Shape implements IHtmlElementInterface  {
         this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
         container.getHtmlElement().appendChild(this.htmlElement);
         
+    }
+
+    setNeutralOrientation() {
+    // Supposons que ces valeurs soient celles que vous lisez du gyroscope
+    const currentBeta = this.orientation.getBeta();
+    const currentGamma = this.orientation.getGamma();
+
+    this.neutralOrientation.setOrientation(currentBeta, currentGamma);
+    }
+
+    updateOrientation(newBeta: number, newGamma: number) {
+        const adjustedBeta = newBeta - this.neutralOrientation.getBeta();
+        const adjustedGamma = newGamma - this.neutralOrientation.getGamma();
+
+        this.orientation.setOrientation(adjustedBeta, adjustedGamma);
     }
 
     getWidth(): number {
@@ -125,6 +149,57 @@ export default class Plane extends Shape implements IHtmlElementInterface  {
                             }
                         }
                         
+                } else if (e instanceof TouchEvent) {
+                        // Traitement des événements tactiles
+                        e.preventDefault();
+                        if (e.type === 'touchmove') {
+                        // Utilisez touch.clientX et touch.clientY au lieu de e.clientX et e.clientY
+                        
+                        const touch = e.touches[0];
+                        const dx = touch.clientX - 20 - this.coords.x;
+                        const dy = touch.clientY - 20 - this.coords.y;
+                        this.coords.x = this.coords.x + dx;
+                        this.coords.y = this.coords.y + dy;
+                        }
+                        if (e.type === 'touchstart') {
+                        // Vous pourriez déclencher un tir lorsque l'utilisateur touche l'avion
+                        this.shoot(squareContainer);
+                        } 
+                }
+                // evenements liés au gyroscope
+                else if(e instanceof DeviceOrientationEvent){
+                    e.preventDefault();
+                    if(e.beta !== null && e.gamma !== null){
+                        this.updateOrientation(e.beta, e.gamma);
+
+                        // gestion du debug 
+                        let alphaInput = document.querySelector("#alpha") as HTMLInputElement;
+                        let betaInput = document.querySelector("#beta") as HTMLInputElement;
+                        let gammaInput = document.querySelector("#gamma") as HTMLInputElement;
+
+                        if(e.alpha && alphaInput){
+                            alphaInput.value = e.alpha.toString();
+                        }
+
+                        if(e.beta && betaInput){
+                            betaInput.value = e.beta.toString();
+                        }
+
+                        if(e.gamma && gammaInput){
+                            gammaInput.value = e.gamma.toString();
+                        }
+                        
+
+
+                        const adjustedBeta = this.orientation.getBeta();
+                        const adjustedGamma = this.orientation.getGamma();
+
+                        this.coords.y += adjustedBeta;
+                        this.coords.x += adjustedGamma;
+                    }
+                    
+                    
+                // gestion des evenements du clavier
                 } else if (e instanceof KeyboardEvent) {
                     switch (e.key) {
                         case "ArrowRight":
