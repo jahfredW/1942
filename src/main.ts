@@ -1,3 +1,5 @@
+// imports
+
 import SquareContainer from './classes/SquareContainer';
 
 import Plane  from './classes/Entities/Plane';
@@ -6,13 +8,42 @@ import SpawnManager  from './classes/Managers/SpawnManager';
 import Game  from './classes/Game';
 import SubMissile from './classes/Entities/SubMissile';
 
+// fonction utilitaires
 
+// traitement des évènements
+function handleEvent(event: Event){
+  if(currentState === gameStatut.RUNNING){
+    plane.moveSquare(event, null, squareContainer)
+  }
+}
+
+// traitement de la taille du device 
+const determinateDevice = (width : number) => {
+  if(width <= 600){
+    return deviceType.MOBILE;
+  }
+  return deviceType.DESKTOP;
+}
 
 // Instanciation des éléments 
 
 const plane = new Plane();
 const squareContainer = new SquareContainer();
 
+// etat de la partie ( running ou paused) :
+const gameStatut = {
+  RUNNING : "running",
+  PAUSED : "paused"
+}
+
+// taille de l"écran 
+const deviceType = {
+  MOBILE : "mobile",
+  DESKTOP : "desktop"
+}
+
+let currentState = gameStatut.RUNNING;
+let currentType : null |string = null;
 
 plane.build(squareContainer);
 
@@ -25,8 +56,8 @@ let spawnManager = new SpawnManager(squareContainer);
 
 // main Game Loop
 function gameLoop(timestamp : number) : void {
-
-    // temps écoulé = temps total - temps dernière boucle
+    if(currentState === gameStatut.RUNNING){
+          // temps écoulé = temps total - temps dernière boucle
     let deltaTime = timestamp - lastTime;
     lastTime = timestamp;
 
@@ -62,49 +93,48 @@ function gameLoop(timestamp : number) : void {
     // Vous pouvez utiliser deltaTime pour ajuster le timing
   
     requestAnimationFrame(gameLoop);
+    }
   }
-  
+
 requestAnimationFrame(gameLoop);
 
 
-// let colorTab = ['cruiser'];
-// let x  = 100;
-// let vInit = 1;
-// let accel = 1;
-
-// let timer = 5000;
-// function executeInterval() {
-    
-//     // rect.build(squareContainer);
-//     // rect.display(x, colorTab[i]);
-//     // squareContainer.addShape(rect);
-//     // vInit = Math.floor(Math.random() * 10) / 10 + 1;
-//     // accel = Math.floor(Math.random() * 10) / 100;
-//     // rect.move(vInit, accel);
-//     // x = Math.floor(Math.random() * 1000) + 1;
-
-//     setTimeout(executeInterval, timer);
-// }
-
-// executeInterval();
-
-// Button Events
-// directionButtons.forEach(button => {
-//     if (button instanceof HTMLElement) {
-//         button.addEventListener('click', (e) => blob.moveSquare(e, button, squareContainerElement));
-//     }
-// });
-
 // Global Events
-document.addEventListener('keydown', (e) => plane.moveSquare(e, null, squareContainer));
-document.addEventListener('mousedown', (e) => plane.moveSquare(e, null, squareContainer));
-document.addEventListener('mousemove', (e) => plane.moveSquare(e, null, squareContainer));
-document.addEventListener('mouseup', (e) => plane.moveSquare(e, null, squareContainer));
 
-// evts bindés sur l'avion pour le mode mobile. 
-plane.getHtmlElement().addEventListener('touchstart', (e) => plane.moveSquare(e, null, squareContainer));
-document.addEventListener('touchstart', (e) => plane.moveSquare(e, null, squareContainer));
-plane.getHtmlElement().addEventListener('touchmove', (e) => plane.moveSquare(e, null, squareContainer));
+
+// factorisation des events : 
+
+const events = ['keydown', 'mousedown', 'mousemove', 'mouseup']; 
+
+console.log(currentType)
+events.forEach(event => {
+  document.addEventListener(event, function(e) {
+    if (currentType === deviceType.DESKTOP) {
+      handleEvent(e);
+    }
+  });
+});
+
+
+// gestion des evenements pour le format mobile 
+
+  // evts bindés sur l'avion pour le mode mobile. 
+  plane.getHtmlElement().addEventListener('touchstart', (e) => plane.moveSquare(e, null, squareContainer));
+  document.addEventListener('touchstart', (e) => plane.moveSquare(e, null, squareContainer));
+  plane.getHtmlElement().addEventListener('touchmove', (e) => plane.moveSquare(e, null, squareContainer));
+
+
+
+// document.addEventListener('keydown', (e) => plane.moveSquare(e, null, squareContainer));
+// document.addEventListener('mousedown', (e) => {
+//   if(currentState === gameStatut.RUNNING) {
+//   plane.moveSquare(e, null, squareContainer)
+// }});
+
+// document.addEventListener('mousemove', (e) => plane.moveSquare(e, null, squareContainer));
+// document.addEventListener('mouseup', (e) => plane.moveSquare(e, null, squareContainer));
+
+
 
 // plus tard ajout du gyroscope.
 window.addEventListener('deviceorientation', (e) => plane.moveSquare(e, null, squareContainer));
@@ -118,6 +148,10 @@ if(element) {
 
     squareContainer.setWidth(container_width);
     squareContainer.setHeight(container_height);
+    
+    currentType = determinateDevice(container_width)
+
+    console.log(currentType);
     // for (let entry of entries) {
     //   // Vous pouvez inspecter 'entry' pour plus d'informations sur les changements de taille.
     //   console.log(entry.contentRect.width, entry.contentRect.height);
