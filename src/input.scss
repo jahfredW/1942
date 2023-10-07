@@ -2,7 +2,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  
 }
 
 .rotate-img {
@@ -15,12 +14,17 @@
   transition: transform 1s ease-in-out;
 }
 
-.container {
+.container__square {
   box-sizing: border-box;
   // padding: 10px;
   text-align: center;
+  overflow: hidden;
+  position: relative;
+  // border: 1px solid blueviolet;
+  min-height: 90vh;
+  margin-bottom: 3px;
 
-  &__square::before {
+  &::before {
     content: "";
     position: absolute;
     top: 0;
@@ -34,14 +38,6 @@
     opacity: 0.5; /* Rend l'image plus transparente */
     filter: contrast(80%); /* Ajuste le contraste */
     z-index: -1; /* Place l'image derrière le contenu */
-  }
-
-  &__square {
-    overflow: hidden;
-    position: relative;
-    // border: 1px solid blueviolet;
-    min-height: 80vh;
-    margin-bottom: 20px;
   }
 }
 
@@ -74,7 +70,7 @@ h1 {
   display: none;
 }
 
-.square {
+.plane {
   z-index: 10;
   position: absolute;
   width: 68px;
@@ -141,6 +137,13 @@ h1 {
   margin: 5px 0;
 }
 
+.flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .gamePad {
   border: 1px solid black;
   padding: 5px;
@@ -160,7 +163,7 @@ h1 {
   left: var(--x-position);
   top: var(--y-position);
   border-radius: 100%;
-  border: 1px solid black;
+  // border: 1px solid black;
 }
 
 .missile {
@@ -171,7 +174,7 @@ h1 {
   left: var(--x-position);
   top: var(--y-position);
   border-radius: 100%;
-  border: 1px solid black;
+  // border: 1px solid black;
 }
 
 .subMissile {
@@ -181,7 +184,7 @@ h1 {
   left: var(--x-position);
   top: var(--y-position);
   border-radius: 100%;
-  border: 1px solid black;
+  // border: 1px solid black;
 }
 
 .debug {
@@ -194,55 +197,140 @@ h1 {
 /* Styles pour le menu pause */
 /* Styles pour le menu pause */
 .pause-menu {
-    font-family: 'Press Start 2P', cursive;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9); /* Fond semi-transparent plus foncé */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 999; /* Pour s'assurer que le menu est au-dessus du reste du contenu */
-    color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  font-family: "Press Start 2P", cursive;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9); /* Fond semi-transparent plus foncé */
 
-    h2 {
-        font-size: 36px; /* Augmenter la taille du titre */
-        margin-bottom: 20px;
-        text-transform: uppercase;
-        letter-spacing: 4px;
-    }
+  z-index: 999; /* Pour s'assurer que le menu est au-dessus du reste du contenu */
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
 
-    ul {
-        list-style: none;
-        padding: 0;
-    }
+  h2 {
+    font-size: 36px; /* Augmenter la taille du titre */
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-align: center;
+
+    /* Ajoutez une animation d'entrée */
+    animation-name: slideInFromLeft;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
 
     li {
-        margin: 15px 0; /* Augmenter la marge entre les éléments de la liste */
+      margin: 15px 0; /* Augmenter la marge entre les éléments de la liste */
     }
+  }
 
-    a {
-        text-decoration: none;
-        color: #ffcc00; /* Utiliser une couleur jaune pour les liens */
-        font-size: 28px; /* Augmenter la taille de la police des liens */
-        transition: color 0.3s;
+  a {
+    text-decoration: none;
+    color: #ffcc00; /* Utiliser une couleur jaune pour les liens */
+    font-size: 28px; /* Augmenter la taille de la police des liens */
+    transition: color 0.3s;
 
-        &:hover {
-            color: #fff; /* Retour à la couleur blanche au survol */
-            text-shadow: none; /* Supprimer l'ombre au survol */
-        }
+    &:hover {
+      color: #fff; /* Retour à la couleur blanche au survol */
+      text-shadow: none; /* Supprimer l'ombre au survol */
     }
+  }
 }
 
+.pause-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 800;
+  width: 3vw;
+  height: 3vw;
+}
 
+.menu {
+  position: relative;
+  border: 1px solid black;
+  background-color: rgba(207, 38, 38, 0.788);
+  min-height: 5vh;
+}
 
 /* Styles pour afficher le menu pause */
 body.pause-active .pause-menu {
-    display: flex;
+  display: flex;
+}
+
+.change-background {
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.329),
+    #ffa6004d,
+    #ffc80049,
+    rgba(167, 211, 236, 0.562),
+    #ffa6004d,
+    #ffc80049,
+    #ff440057,
+    rgba(0, 0, 0, 0.329)
+  );
+  background-size: 400% 400%;
+  animation: changeBackground 15s ease-in-out infinite;
+  border-radius: 3px;
+  box-shadow: 0 5px 35px 0px rgba(0, 0, 0, 0.1);
+}
+
+// animations
+/* Animation pour faire apparaître le titre depuis la gauche */
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Animation pour faire apparaître un élément depuis la droite */
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes changeBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 50% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Appliquez les animations aux éléments spécifiques */
+.slide-from-right {
+  animation-name: slideInFromRight;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+}
+
+.slide-from-left {
+  animation-name: slideInFromLeft;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
 }

@@ -81,11 +81,10 @@ export default class Game {
     }
 
     for (let i of shipsToRemove) {
-      if (SquareContainer.shipList[i]){
+      if (SquareContainer.shipList[i]) {
         SquareContainer.shipList[i].getHtmlElement().remove();
         SquareContainer.shipList.splice(i, 1);
       }
-      
     }
   }
 
@@ -114,8 +113,8 @@ export default class Game {
           width: bullet.getWidth(),
           height: bullet.getHeight(),
         };
-        console.log(SquareContainer.bulletList.length);
-        console.log(SquareContainer.shipList.length);
+        // console.log(SquareContainer.bulletList.length);
+        // console.log(SquareContainer.shipList.length);
 
         if (bulletRect.y <= 1) {
           bulletsToRemove.push(j);
@@ -138,18 +137,16 @@ export default class Game {
 
     // Supprimer les éléments marqués
     for (let i of shipsToRemove.reverse()) {
-      if (SquareContainer.shipList[i]){
+      if (SquareContainer.shipList[i]) {
         SquareContainer.shipList[i].getHtmlElement().remove();
         SquareContainer.shipList.splice(i, 1);
       }
-      
     }
     for (let j of bulletsToRemove.reverse()) {
-      if (SquareContainer.shipList[j]){
+      if (SquareContainer.shipList[j]) {
         SquareContainer.bulletList[j].getHtmlElement().remove();
         SquareContainer.bulletList.splice(j, 1);
       }
-      
     }
   }
 
@@ -160,7 +157,6 @@ export default class Game {
   ) {
     let missilesToRemove = [];
     let missileList = SquareContainer.missileList;
-  
 
     // récupération des caractéristiques HTML de l'avion .
     const planeHtml = {
@@ -170,25 +166,34 @@ export default class Game {
       height: plane.getHeight(),
     };
     for (let j = 0; j < missileList.length; j++) {
-      // récupération des caractéristiques html du missile 
+      // récupération des caractéristiques html du missile
       let missile = missileList[j];
-      const missileHtml= {
+      const missileHtml = {
         x: missile.getCoordX(),
         y: missile.getCoordY(), // Correction ici
         width: missile.getWidth(),
         height: missile.getHeight(),
       };
       // parcours du tableau des missiles et gestion des collisions
-      if (missileHtml.y <= 1 || missileHtml.y >= container.getHeight() || missileHtml.x <= 0 || missileHtml.x >= container.getWidth()) {
+      if (
+        missileHtml.y <= 1 ||
+        missileHtml.y >= container.getHeight() ||
+        missileHtml.x <= 0 ||
+        missileHtml.x >= container.getWidth()
+      ) {
         missilesToRemove.push(j);
       }
 
       // Vérifier si une collision a lieu
       else if (
-        planeHtml.x < missileHtml.x + ( missileHtml.width - missileHtml.width * 0.5) &&
-        planeHtml.x + (planeHtml.width - planeHtml.width * 0.5) > missileHtml.x &&
-        planeHtml.y < missileHtml.y + ( missileHtml.height - missileHtml.height * 0.5) &&
-        planeHtml.y + (planeHtml.height + planeHtml.height * 0.5) > missileHtml.y
+        planeHtml.x <
+          missileHtml.x + (missileHtml.width - missileHtml.width * 0.5) &&
+        planeHtml.x + (planeHtml.width - planeHtml.width * 0.5) >
+          missileHtml.x &&
+        planeHtml.y <
+          missileHtml.y + (missileHtml.height - missileHtml.height * 0.5) &&
+        planeHtml.y + (planeHtml.height + planeHtml.height * 0.5) >
+          missileHtml.y
       ) {
         // Collision détectée, marquer le ship et la bullet pour suppression
         console.log("hit");
@@ -197,11 +202,10 @@ export default class Game {
     }
     // suppression des missiels de leur conteneur ( reverse )
     for (let i of missilesToRemove.reverse()) {
-      if(SquareContainer.missileList[i]){
+      if (SquareContainer.missileList[i]) {
         SquareContainer.missileList[i].getHtmlElement().remove();
         SquareContainer.missileList.splice(i, 1);
       }
-      
     }
   }
 }

@@ -47,7 +47,7 @@ export default class Plane extends Shape implements IHtmlElementInterface {
   //   }
 
   build(container: SquareContainer) {
-    this.htmlElement.classList.add("square");
+    this.htmlElement.classList.add("plane");
     this.htmlElement.src = "/assets/plane/plane.png";
     this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
     this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
@@ -161,8 +161,8 @@ export default class Plane extends Shape implements IHtmlElementInterface {
 
           // limitation de l'hélice en x :
 
-          console.log("x helice", this.helice.getCoordX());
-          console.log("largeur contenuer", squareContainer.getWidth() - 40);
+          // console.log("x helice", this.helice.getCoordX());
+          // console.log("largeur contenuer", squareContainer.getWidth() - 40);
 
           if (this.helice.getCoordX() > squareContainer.getWidth() - 35) {
             // on met à jours les coords de l'hélice

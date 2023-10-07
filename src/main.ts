@@ -9,6 +9,24 @@ import AnimationManager from "./classes/Managers/AnimationManager";
 import Game from "./classes/Game";
 import SubMissile from "./classes/Entities/SubMissile";
 
+// mise en route de l'audio
+// const audio = new Audio("../../public/audios/tom.mp3");
+// audio.loop = true; // Définissez la propriété loop sur true
+// audio.play(); // Commencez la lecture audio
+
+const audio = document.querySelector("audio")!;
+
+// récupération du bouton start :
+const startButton = document.querySelector("#startButton");
+startButton?.addEventListener("click", pauseGame);
+
+// récupération du bouton pause :
+const pauseButton = document.querySelector(".pause-icon");
+pauseButton?.addEventListener("click", pauseGame);
+
+// récupération du menu de pause.
+const pauseMenu = document.querySelector(".pause-menu")!;
+
 // fonction utilitaires
 
 // traitement des évènements
@@ -44,8 +62,11 @@ const deviceType = {
   DESKTOP: "desktop",
 };
 
-let currentState = gameStatut.RUNNING;
+let currentState = gameStatut.PAUSED;
 let currentType: null | string = null;
+
+let requestId: number;
+let pausedTime = 0; // Ajoutez cette variable
 
 plane.build(squareContainer);
 
@@ -60,6 +81,14 @@ const animationManager = new AnimationManager(helice);
 // main Game Loop
 function gameLoop(timestamp: number): void {
   if (currentState === gameStatut.RUNNING) {
+    if (pausedTime > 0) {
+      // Si le jeu était en pause, ajustez lastTime
+      lastTime += timestamp - pausedTime;
+      pausedTime = 0; // Réinitialisez pausedTime
+    }
+    // Reste du code inchangé
+    // ...
+
     // temps écoulé = temps total - temps dernière boucle
     let deltaTime = timestamp - lastTime;
     lastTime = timestamp;
@@ -100,7 +129,12 @@ function gameLoop(timestamp: number): void {
 
     animationManager.animate(timestamp);
 
-    requestAnimationFrame(gameLoop);
+    requestId = requestAnimationFrame(gameLoop);
+  } else if (currentState === gameStatut.PAUSED) {
+    if (pausedTime === 0) {
+      // Si le jeu vient d'être mis en pause, enregistrez le timestamp
+      pausedTime = timestamp;
+    }
   }
 }
 
@@ -124,19 +158,22 @@ events.forEach((event) => {
 // gestion des evenements pour le format mobile
 
 // evts bindés sur l'avion pour le mode mobile.
-plane
-  .getHtmlElement()
-  .addEventListener("touchstart", (e) =>
+
+if (gameStatut.RUNNING) {
+  plane
+    .getHtmlElement()
+    .addEventListener("touchstart", (e) =>
+      plane.moveSquare(e, null, squareContainer)
+    );
+  document.addEventListener("touchstart", (e) =>
     plane.moveSquare(e, null, squareContainer)
   );
-document.addEventListener("touchstart", (e) =>
-  plane.moveSquare(e, null, squareContainer)
-);
-plane
-  .getHtmlElement()
-  .addEventListener("touchmove", (e) =>
-    plane.moveSquare(e, null, squareContainer)
-  );
+  plane
+    .getHtmlElement()
+    .addEventListener("touchmove", (e) =>
+      plane.moveSquare(e, null, squareContainer)
+    );
+}
 
 // document.addEventListener('keydown', (e) => plane.moveSquare(e, null, squareContainer));
 // document.addEventListener('mousedown', (e) => {
@@ -171,4 +208,25 @@ if (element) {
     // }
   });
   resizeObserver.observe(element);
+}
+
+// fonction de pause
+// Pour mettre en pause le jeu
+function pauseGame() {
+  if (currentState === gameStatut.RUNNING) {
+    currentState = gameStatut.PAUSED;
+
+    audio.pause(); // Commencez la lecture audio
+    pauseMenu.classList.remove("off");
+    pauseMenu.classList.add("flex");
+  } else if (currentState === gameStatut.PAUSED) {
+    currentState = gameStatut.RUNNING;
+
+    audio.play(); // Commencez la lecture audio
+    pauseMenu.classList.remove("flex");
+    pauseMenu.classList.add("off");
+
+    // Redémarrer la boucle du jeu
+    requestAnimationFrame(gameLoop);
+  }
 }
