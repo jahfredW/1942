@@ -21,7 +21,7 @@
   overflow: hidden;
   position: relative;
   // border: 1px solid blueviolet;
-  min-height: 90vh;
+  min-height: 100vh;
   margin-bottom: 3px;
 
   &::before {
@@ -268,7 +268,7 @@ h1 {
 
 .pause-icon {
   position: absolute;
-  top: 10px;
+  bottom: 10px;
   right: 10px;
   z-index: 800;
   width: 3vw;
