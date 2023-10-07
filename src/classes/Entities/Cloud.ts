@@ -6,20 +6,14 @@ import IHtmlElementInterface from "../Interfaces/IHtmlElementInterface";
  */
 export default class Cloud implements IHtmlElementInterface {
   constructor(
-    protected coords: { x: number; y: number } = { x: 0, y: 0 },
+    protected coords: { x: number; y: number } = { x: 250, y: 430 },
     protected dimensions: { width: number; height: number } = {
-      width: 5,
-      height: 5,
+      width: 100,
+      height: 100,
     },
     protected htmlElement: HTMLImageElement = document.querySelector<HTMLImageElement>(
-      ".bullet"
+      ".cloud1"
     )!,
-    protected cloudSrcListe: string[] = [
-      "/assets/clouds/cloud1.png",
-      "/assets/clouds/cloud2.png",
-      "/assets/clouds/cloud3.png",
-      "/assets/clouds/cloud4.png",
-    ],
     protected ttl: number = 0,
     protected timeStamp: number = 0
   ) {}

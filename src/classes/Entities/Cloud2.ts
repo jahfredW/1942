@@ -5,19 +5,19 @@ import Cloud from "./Cloud";
 /**
  * Classe représentant l'arme de l'avion
  */
-export default class Cloud1 extends Cloud implements IHtmlElementInterface {
+export default class Cloud2 extends Cloud implements IHtmlElementInterface {
   constructor() {
     super();
   }
 
   // Contruction de la bullet en html
   build(container: SquareContainer): void {
-    this.htmlElement = document.querySelector<HTMLImageElement>(".cloud1")!;
+    this.htmlElement = document.querySelector<HTMLImageElement>(".cloud2")!;
     let containerElt = container.getHtmlElement();
     this.htmlElement = document.createElement("img");
-    this.htmlElement.classList.add("cloud1");
+    this.htmlElement.classList.add("cloud2");
 
-    this.htmlElement.src = "/assets/clouds/cloud1.png";
+    this.htmlElement.src = "/assets/clouds/cloud2.png";
 
     // initialisation des coordonnées
     this.coords.x =  Math.floor(Math.random() * container.getWidth()) + 1; 
@@ -74,7 +74,7 @@ export default class Cloud1 extends Cloud implements IHtmlElementInterface {
     let vInit = 1;
 
     // Utilisez deltaTime pour rendre l'animation indépendante du taux de rafraîchissement
-    this.coords.y += vInit * (deltaTime / 5);
+    this.coords.y += vInit * (deltaTime / 8);
 
     // Mettez à jour la propriété CSS ! TRES IMPORTANT
     if (this.htmlElement) {

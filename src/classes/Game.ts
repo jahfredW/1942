@@ -12,8 +12,32 @@ export default class Game {
     Game.checkShipOutOfScreen(container);
     Game.checkBulletAndShipCollisions();
     Game.checkOutOfScreenMissiles(container);
+    Game.checkOutOfScreenClouds(container);
     Game.checkCollisionWithEnnemyBullet(plane, container);
   }
+
+  static checkOutOfScreenClouds(squareContainer : SquareContainer) {
+    let cloudsToRemove: number[] = [];
+    for (let j = 0; j < SquareContainer.cloudList.length; j++) {
+      const cloud = SquareContainer.cloudList[j];
+      const cloudRect = {
+        x: cloud.getCoordX(),
+        y: cloud.getCoordY(),
+        width: cloud.getWidth(),
+        height: cloud.getHeight(),
+      };
+      if (cloudRect.y >= squareContainer.getHeight() ) {
+        cloudsToRemove.push(j);
+      }
+    }
+
+    for (let cloud of cloudsToRemove.reverse()) {
+      SquareContainer.cloudList[cloud].getHtmlElement().remove();
+      SquareContainer.cloudList.splice(cloud, 1);
+    }
+  }
+
+
 
   static checkOutOfScreenBullets() {
     let bulletsToRemove: number[] = [];

@@ -5,6 +5,7 @@ import SquareContainer from "./classes/SquareContainer";
 import Plane from "./classes/Entities/Plane";
 
 import SpawnManager from "./classes/Managers/SpawnManager";
+import CloudSpawnManager from "./classes/Managers/CloudSpawnManager";
 import AnimationManager from "./classes/Managers/AnimationManager";
 import Game from "./classes/Game";
 import SubMissile from "./classes/Entities/SubMissile";
@@ -14,7 +15,7 @@ import SubMissile from "./classes/Entities/SubMissile";
 // audio.loop = true; // Définissez la propriété loop sur true
 // audio.play(); // Commencez la lecture audio
 
-const audio = document.querySelector("audio")!;
+// const audio = document.querySelector("audio")!;
 
 // récupération du bouton start :
 const startButton = document.querySelector("#startButton");
@@ -74,6 +75,7 @@ plane.build(squareContainer);
 
 let lastTime = 0;
 let spawnManager = new SpawnManager(squareContainer);
+let cloudManager = new CloudSpawnManager(squareContainer);
 
 const helice = document.querySelector(".helice") as HTMLImageElement;
 const animationManager = new AnimationManager(helice);
@@ -96,12 +98,20 @@ function gameLoop(timestamp: number): void {
     // Gestion du respawn des bateaux
     spawnManager.update(timestamp);
 
+    // Gestion du respawn des nuages
+    cloudManager.update(timestamp);
     // déplacement des bateaux
     for (const ship of SquareContainer.shipList) {
       ship.move(deltaTime);
       // Si le temps écoulé depuis le dernier tir est supérieur à 1000 ms, alors tirer
 
       ship.tryShoot(timestamp, squareContainer, plane); // Mettre à jour le moment du dernier tir
+    }
+    
+    // déplacement des nuages 
+    for (const cloud of SquareContainer.cloudList) {
+      // Assume BulletList est le tableau contenant toutes vos instances de Bullet
+      cloud.move(deltaTime);
     }
 
     // déplacement des missiles
@@ -216,13 +226,13 @@ function pauseGame() {
   if (currentState === gameStatut.RUNNING) {
     currentState = gameStatut.PAUSED;
 
-    audio.pause(); // Commencez la lecture audio
+    // audio.pause(); // Commencez la lecture audio
     pauseMenu.classList.remove("off");
     pauseMenu.classList.add("flex");
   } else if (currentState === gameStatut.PAUSED) {
     currentState = gameStatut.RUNNING;
 
-    audio.play(); // Commencez la lecture audio
+    // audio.play(); // Commencez la lecture audio
     pauseMenu.classList.remove("flex");
     pauseMenu.classList.add("off");
 
