@@ -2,6 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  
 }
 
 .rotate-img {
@@ -16,7 +17,7 @@
 
 .container {
   box-sizing: border-box;
-  padding: 10px;
+  // padding: 10px;
   text-align: center;
 
   &__square::before {
@@ -38,7 +39,7 @@
   &__square {
     overflow: hidden;
     position: relative;
-    border: 1px solid blueviolet;
+    // border: 1px solid blueviolet;
     min-height: 80vh;
     margin-bottom: 20px;
   }
@@ -88,16 +89,16 @@ h1 {
 }
 
 /* Définissez le fond d'image pour l'inclinaison vers la gauche */
-.square.left-plane {
-  border: none;
-  background-image: url("/assets/plane/leftPlane.png");
-}
+// .square.left-plane {
+//   border: none;
+//   background-image: url("/assets/plane/leftPlane.png");
+// }
 
-/* Définissez le fond d'image pour l'inclinaison vers la droite */
-.square.right-plane {
-  border: none;
-  background-image: url("../public/assets/plane/rightPlane.png");
-}
+// /* Définissez le fond d'image pour l'inclinaison vers la droite */
+// .square.right-plane {
+//   border: none;
+//   background-image: url("../public/assets/plane/rightPlane.png");
+// }
 
 .helice {
   position: absolute;
@@ -188,4 +189,60 @@ h1 {
   flex-direction: row;
   justify-content: space-between;
   height: 30px;
+}
+
+/* Styles pour le menu pause */
+/* Styles pour le menu pause */
+.pause-menu {
+    font-family: 'Press Start 2P', cursive;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* Fond semi-transparent plus foncé */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* Pour s'assurer que le menu est au-dessus du reste du contenu */
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+
+    h2 {
+        font-size: 36px; /* Augmenter la taille du titre */
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    li {
+        margin: 15px 0; /* Augmenter la marge entre les éléments de la liste */
+    }
+
+    a {
+        text-decoration: none;
+        color: #ffcc00; /* Utiliser une couleur jaune pour les liens */
+        font-size: 28px; /* Augmenter la taille de la police des liens */
+        transition: color 0.3s;
+
+        &:hover {
+            color: #fff; /* Retour à la couleur blanche au survol */
+            text-shadow: none; /* Supprimer l'ombre au survol */
+        }
+    }
+}
+
+
+
+/* Styles pour afficher le menu pause */
+body.pause-active .pause-menu {
+    display: flex;
 }
