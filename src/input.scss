@@ -96,7 +96,21 @@ h1 {
   width: 68px;
   height: 55px;
   border: none;
-  background-image: url("/assets/plane/plane.png");
+  // background-image: url("/assets/plane/plane.png");
+  background-size: contain;
+  transition: background-image 0.2s ease;
+  left: var(--x-position);
+  top: var(--y-position);
+  box-sizing: border-box;
+}
+
+.ennemyPlane1 {
+  z-index: 300;
+  position: absolute;
+  width: 70px;
+  height: 57px;
+  // border: 1px solid black;
+  // background-image: url("/assets/plane/plane.png");
   background-size: contain;
   transition: background-image 0.2s ease;
   left: var(--x-position);
@@ -198,6 +212,16 @@ h1 {
 }
 
 .subMissile {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  left: var(--x-position);
+  top: var(--y-position);
+  border-radius: 100%;
+  // border: 1px solid black;
+}
+
+.ennemyPlaneMissile {
   position: absolute;
   width: 8px;
   height: 8px;

@@ -3,6 +3,7 @@ import Missile from "./Entities/Missile";
 import Ship from "./Entities/Ship";
 import Plane from "./Entities/Plane";
 import Cloud from "./Entities/Cloud";
+import EnnemyPlane from "./Entities/EnnemyPlane";
 import IHtmlElementInterface from "./Interfaces/IHtmlElementInterface";
 
 interface ContainerCoords {
@@ -36,6 +37,7 @@ export default class SquareContainer implements IHtmlElementInterface {
   static bulletList: Bullet[] = [];
   static missileList: Missile[] = [];
   static cloudList: Cloud[] = [];
+  static ennemyPlaneList: EnnemyPlane[] = [];
 
   constructor(
     private square: Plane = new Plane(),

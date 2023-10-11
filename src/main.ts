@@ -5,14 +5,15 @@ import SquareContainer from "./classes/SquareContainer";
 import Plane from "./classes/Entities/Plane";
 
 import SpawnManager from "./classes/Managers/SpawnManager";
+import EnnemyPlaneSpawnManager from "./classes/Managers/EnnemyPlaneSpawnManager";
 import CloudSpawnManager from "./classes/Managers/CloudSpawnManager";
 import AnimationManager from "./classes/Managers/AnimationManager";
 import Game from "./classes/Game";
 import SubMissile from "./classes/Entities/SubMissile";
 
 // mise en route de l'audio
-// const audio = new Audio("../../public/audios/tom.mp3");
-// audio.loop = true; // Définissez la propriété loop sur true
+const audio = new Audio("../../public/audios/tom.mp3");
+audio.loop = true; // Définissez la propriété loop sur true
 // audio.play(); // Commencez la lecture audio
 
 // const audio = document.querySelector("audio")!;
@@ -75,14 +76,19 @@ plane.build(squareContainer);
 
 let lastTime = 0;
 let spawnManager = new SpawnManager(squareContainer);
+
 let cloudManager = new CloudSpawnManager(squareContainer);
+
+let ennemyPlaneSpawnManager = new EnnemyPlaneSpawnManager(squareContainer);
 
 const helice = document.querySelector(".helice") as HTMLImageElement;
 const animationManager = new AnimationManager(helice);
 
 // main Game Loop
 function gameLoop(timestamp: number): void {
+
   if (currentState === gameStatut.RUNNING) {
+    
     if (pausedTime > 0) {
       // Si le jeu était en pause, ajustez lastTime
       lastTime += timestamp - pausedTime;
@@ -98,6 +104,9 @@ function gameLoop(timestamp: number): void {
     // Gestion du respawn des bateaux
     spawnManager.update(timestamp);
 
+    // Gestion du respawn des avions ennemys
+    ennemyPlaneSpawnManager.update(timestamp);
+
     // Gestion du respawn des nuages
     cloudManager.update(timestamp);
     // déplacement des bateaux
@@ -106,6 +115,15 @@ function gameLoop(timestamp: number): void {
       // Si le temps écoulé depuis le dernier tir est supérieur à 1000 ms, alors tirer
 
       ship.tryShoot(timestamp, squareContainer, plane); // Mettre à jour le moment du dernier tir
+    }
+
+    console.log(SquareContainer.ennemyPlaneList);
+    // déplacement des avions ennemy
+    for (const eplane of SquareContainer.ennemyPlaneList) {
+      eplane.move(deltaTime);
+      // Si le temps écoulé depuis le dernier tir est supérieur à 1000 ms, alors tirer
+
+      eplane.tryShoot(timestamp, squareContainer, plane); // Mettre à jour le moment du dernier tir
     }
     
     // déplacement des nuages 
@@ -226,13 +244,13 @@ function pauseGame() {
   if (currentState === gameStatut.RUNNING) {
     currentState = gameStatut.PAUSED;
 
-    // audio.pause(); // Commencez la lecture audio
+    audio.pause(); // Commencez la lecture audio
     pauseMenu.classList.remove("off");
     pauseMenu.classList.add("flex");
   } else if (currentState === gameStatut.PAUSED) {
     currentState = gameStatut.RUNNING;
 
-    // audio.play(); // Commencez la lecture audio
+    audio.play(); // Commencez la lecture audio
     pauseMenu.classList.remove("flex");
     pauseMenu.classList.add("off");
 

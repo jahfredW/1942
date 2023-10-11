@@ -27,19 +27,20 @@ interface squareDimensions {
  * classe rectangle : classe abstraite qui permet de servir de base pour construire les rectangles,
  * en leur ajouter la classe 'rect' définie dans le fichier input.scss
  */
-export default class Ship  implements IEnnemyInterface {
-    static allShips : Ship[] = [];
+export default class EnnemyPlane {
+    static allEnnemyPlane : EnnemyPlane[] = [];
 
   constructor(
         protected coords : squareCoords = { x : 250, y : 430 },
-        protected htmlElement : HTMLImageElement = document.querySelector<HTMLImageElement>('.rect')!,
-        protected dimensions : squareDimensions = { width : 5, height : 5},
+        protected htmlElement : HTMLImageElement = document.querySelector<HTMLImageElement>('.ennemyPlane1')!,
+        protected dimensions : squareDimensions = { width : 200, height : 57},
         protected lastShotTime : number = 0,
-        protected shootingManager : ShootingManager = new ShootingManager(1000)
+        protected shootingManager : ShootingManager = new ShootingManager(1000),
+        protected acceleration : number = 1
   ) {
      
     
-    SquareContainer.shipList.push(this);
+    
     
   }
 
@@ -47,24 +48,8 @@ export default class Ship  implements IEnnemyInterface {
   {}
 
   // Contruction du rectangle
-  build(container: SquareContainer): void {
-    let containerElt = container.getHtmlElement();
-    this.htmlElement = document.createElement("img");
-    
-    this.htmlElement.src=  "/assets/cruiser/ship.png";
-    this.coords.x =  Math.floor(Math.random() * container.getWidth()) + 1; 
-    this.coords.y = 0;
-
-    this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
-    this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
-
-    containerElt.appendChild(this.htmlElement);
-
-    this.dimensions.width = this.htmlElement.offsetWidth;
-    this.dimensions.height = this.htmlElement.offsetHeight;
-
-    console.log("dimensions conteneur", container.getWidth(), container.getHeight());
-
+  build(container: SquareContainer, x: number): void {
+    SquareContainer.ennemyPlaneList.push(this);
   }
 
   getCoordX() : number {
@@ -87,6 +72,7 @@ export default class Ship  implements IEnnemyInterface {
   display(): void {
     this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
     this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
+    this.htmlElement.classList.add("ennemyPlane1");
     
   }
 
@@ -112,17 +98,6 @@ export default class Ship  implements IEnnemyInterface {
     // Utilisez deltaTime pour rendre l'animation indépendante du taux de rafraîchissement
     this.coords.y += vInit * acceleration * (deltaTime / 10);
 
-    // Appliquez les limites
-    // if (this.coords.y >= 430) {
-    //     this.coords.y = 430;
-    //     acceleration *= -1;
-    //     this.htmlElement.classList.add("off");
-    //     this.htmlElement.remove();
-    // } else if (this.coords.y <= 0) {
-    //     this.coords.y = 0;
-    //     acceleration *= -1;
-    // }
-
     // Mettez à jour la propriété CSS
     this.htmlElement.style.setProperty(
         "--y-position",
@@ -130,6 +105,7 @@ export default class Ship  implements IEnnemyInterface {
     );
 
   }
+
 
   shoot(squareContainer : SquareContainer, angle : number, timeStamp : number) : void {
     
