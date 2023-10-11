@@ -26,7 +26,7 @@ export default class AnimationManager {
     const deltaTime = timestamp - this.lastTimestamp;
     this.elapsedTime += deltaTime; // Incrémentation du temps écoulé
 
-    if (this.elapsedTime > 200) {
+    if (this.elapsedTime > 100) {
       // Changez l'image après 1 seconde
       this.imageIndex = (this.imageIndex + 1) % this.imagePaths.length;
       this.element.src = this.imagePaths[this.imageIndex];

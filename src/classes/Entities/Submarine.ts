@@ -31,6 +31,9 @@ export default class Submarine extends Ship {
     
         containerElt.appendChild(this.htmlElement);
 
+        this.vInit = 0.5;
+        this.acceleration = 0.1;
+
         this.dimensions.width = this.htmlElement.offsetWidth;
         this.dimensions.height = this.htmlElement.offsetHeight; 
     

@@ -3,6 +3,7 @@ import SquareContainer from "../SquareContainer";
 import ConcreteWeaponFactory from "../Factories/ConcreteWeaponFactory";
 import Bullet from "./Bullet";
 import ShootingManager from "../Managers/ShootingManager";
+import MovePattern from "../Gameplay/movePattern";
 import Plane from "./Plane";
 
 
@@ -35,7 +36,9 @@ export default class Ship  implements IEnnemyInterface {
         protected htmlElement : HTMLImageElement = document.querySelector<HTMLImageElement>('.rect')!,
         protected dimensions : squareDimensions = { width : 5, height : 5},
         protected lastShotTime : number = 0,
-        protected shootingManager : ShootingManager = new ShootingManager(1000)
+        protected shootingManager : ShootingManager = new ShootingManager(1000),
+        protected vInit: number = 0,
+        protected acceleration: number = 0
   ) {
      
     
@@ -63,6 +66,8 @@ export default class Ship  implements IEnnemyInterface {
     this.dimensions.width = this.htmlElement.offsetWidth;
     this.dimensions.height = this.htmlElement.offsetHeight;
 
+   
+
     console.log("dimensions conteneur", container.getWidth(), container.getHeight());
 
   }
@@ -73,6 +78,10 @@ export default class Ship  implements IEnnemyInterface {
 
   getCoordY() : number {
     return this.coords.y;
+  }
+
+  setCoordY(value : number) : void {
+    this.coords.y = value;
   }
 
   getWidth() : number {
@@ -106,28 +115,32 @@ export default class Ship  implements IEnnemyInterface {
   }
 
   move(deltaTime: number = 0): void {
-    let acceleration = 1;
-    let vInit = 1;
 
-    // Utilisez deltaTime pour rendre l'animation indépendante du taux de rafraîchissement
-    this.coords.y += vInit * acceleration * (deltaTime / 10);
+    MovePattern.goDown(deltaTime, this);
 
-    // Appliquez les limites
-    // if (this.coords.y >= 430) {
-    //     this.coords.y = 430;
-    //     acceleration *= -1;
-    //     this.htmlElement.classList.add("off");
-    //     this.htmlElement.remove();
-    // } else if (this.coords.y <= 0) {
-    //     this.coords.y = 0;
-    //     acceleration *= -1;
-    // }
 
-    // Mettez à jour la propriété CSS
-    this.htmlElement.style.setProperty(
-        "--y-position",
-        `${this.coords.y}px`
-    );
+    // let acceleration = 1;
+    // let vInit = 1;
+
+    // // Utilisez deltaTime pour rendre l'animation indépendante du taux de rafraîchissement
+    // this.coords.y += vInit * acceleration * (deltaTime / 10);
+
+    // // Appliquez les limites
+    // // if (this.coords.y >= 430) {
+    // //     this.coords.y = 430;
+    // //     acceleration *= -1;
+    // //     this.htmlElement.classList.add("off");
+    // //     this.htmlElement.remove();
+    // // } else if (this.coords.y <= 0) {
+    // //     this.coords.y = 0;
+    // //     acceleration *= -1;
+    // // }
+
+    // // Mettez à jour la propriété CSS
+    // this.htmlElement.style.setProperty(
+    //     "--y-position",
+    //     `${this.coords.y}px`
+    // );
 
   }
 

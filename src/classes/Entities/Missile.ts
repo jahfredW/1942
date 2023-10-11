@@ -20,7 +20,7 @@ export default class Missile extends Weapon implements IHtmlElementInterface  {
         this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
         this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
 
-        this.ttl = 6000;
+        this.ttl = 1000;
         
 
         // dimensions qui viennent du DOM, à récupérer après l'injection dans le DOM !!!!

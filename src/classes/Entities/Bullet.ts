@@ -74,7 +74,7 @@ export default class Bullet extends Weapon implements IHtmlElementInterface  {
     let vInit = 1;
 
     // Utilisez deltaTime pour rendre l'animation indépendante du taux de rafraîchissement
-    this.coords.y -= vInit * (deltaTime / 5);
+    this.coords.y -= vInit * (deltaTime);
 
     // Mettez à jour la propriété CSS ! TRES IMPORTANT 
     if(this.htmlElement){

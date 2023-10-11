@@ -93,6 +93,14 @@ export default class Plane extends Shape implements IHtmlElementInterface {
     return this.coords;
   }
 
+  getCoordX() : number {
+    return this.coords.x;
+  }
+
+  getCoordY() : number {
+    return this.coords.y;
+  }
+
   getHtmlElement(): HTMLElement {
     return this.htmlElement;
   }

@@ -117,7 +117,7 @@ function gameLoop(timestamp: number): void {
       ship.tryShoot(timestamp, squareContainer, plane); // Mettre à jour le moment du dernier tir
     }
 
-    console.log(SquareContainer.ennemyPlaneList);
+   
     // déplacement des avions ennemy
     for (const eplane of SquareContainer.ennemyPlaneList) {
       eplane.move(deltaTime);

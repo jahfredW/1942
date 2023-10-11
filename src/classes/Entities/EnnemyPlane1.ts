@@ -5,6 +5,7 @@ import Bullet from "./Bullet";
 import ShootingManager from "../Managers/ShootingManager";
 import Plane from "./Plane";
 import EnnemyPlane from "./EnnemyPlane";
+import MovePattern from "../Gameplay/movePattern";
 
 
 
@@ -64,6 +65,9 @@ export default class EnnemyPlane1 extends EnnemyPlane {
     this.dimensions.width = this.htmlElement.offsetWidth;
     this.dimensions.height = this.htmlElement.offsetHeight;
 
+    this.vInit = 1;
+    this.acceleration = 0.3;
+
     SquareContainer.ennemyPlaneList.push(this);
 
     console.log("dimensions conteneur", container.getWidth(), container.getHeight());
@@ -108,28 +112,7 @@ export default class EnnemyPlane1 extends EnnemyPlane {
   }
 
   move(deltaTime: number = 0): void {
-    this.acceleration += 0.1;
-    let vInit = 1;
-
-    // Utilisez deltaTime pour rendre l'animation indépendante du taux de rafraîchissement
-    this.coords.y += vInit * this.acceleration;
-
-    // Appliquez les limites
-    // if (this.coords.y >= 430) {
-    //     this.coords.y = 430;
-    //     acceleration *= -1;
-    //     this.htmlElement.classList.add("off");
-    //     this.htmlElement.remove();
-    // } else if (this.coords.y <= 0) {
-    //     this.coords.y = 0;
-    //     acceleration *= -1;
-    // }
-
-    // Mettez à jour la propriété CSS
-    this.htmlElement.style.setProperty(
-        "--y-position",
-        `${this.coords.y}px`
-    );
+    MovePattern.goDown(deltaTime, this);
 
   }
 

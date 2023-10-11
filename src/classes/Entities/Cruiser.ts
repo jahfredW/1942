@@ -14,7 +14,7 @@ export default class Cruiser extends Ship {
     constructor(){
         super();
         // Ici on configure le taux de rechargement du tir à l'aide du shooting manager
-        this.shootingManager = new ShootingManager(1000);
+        this.shootingManager = new ShootingManager(5);
     }
 
     // Surcharge de la méthode build
@@ -35,6 +35,10 @@ export default class Cruiser extends Ship {
 
         this.dimensions.width = this.htmlElement.offsetWidth;
         this.dimensions.height = this.htmlElement.offsetHeight;
+
+         // définition de la vinit et de l'accélération 
+        this.vInit = 1;
+        this.acceleration = 0.2;
 
         console.log("dimensions conteneur", container.getWidth(), container.getHeight());
         

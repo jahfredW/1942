@@ -36,7 +36,9 @@ export default class EnnemyPlane {
         protected dimensions : squareDimensions = { width : 200, height : 57},
         protected lastShotTime : number = 0,
         protected shootingManager : ShootingManager = new ShootingManager(1000),
-        protected acceleration : number = 1
+        protected acceleration : number = 0,
+        protected vInit: number = 0,
+       
   ) {
      
     
@@ -58,6 +60,15 @@ export default class EnnemyPlane {
 
   getCoordY() : number {
     return this.coords.y;
+  }
+
+  setCoordX(value: number) {
+    this.coords.x = value;
+  }
+
+  setCoordY(value: number) : this {
+    this.coords.y = value;
+    return this;
   }
 
   getWidth() : number {
