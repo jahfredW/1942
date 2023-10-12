@@ -38,6 +38,14 @@ function handleEvent(event: Event) {
   }
 }
 
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    // Ici, vous pouvez ajouter le code à exécuter lorsque la touche Échap est enfoncée
+    // Par exemple, pour mettre en pause le jeu, vous pouvez appeler la fonction pauseGame().
+    pauseGame(); // Exemple
+  }
+});
+
 // traitement de la taille du device
 const determinateDevice = (width: number) => {
   if (width <= 600) {
@@ -83,6 +91,14 @@ let ennemyPlaneSpawnManager = new EnnemyPlaneSpawnManager(squareContainer);
 
 const helice = document.querySelector(".helice") as HTMLImageElement;
 const animationManager = new AnimationManager(helice);
+
+const adviceMenu = document.querySelector(".advice-menu") as HTMLElement;
+
+let firstPlay = true;
+
+setTimeout(() => {
+  document.querySelector(".advice-menu");
+}, 4000);
 
 // main Game Loop
 function gameLoop(timestamp: number): void {
@@ -238,22 +254,36 @@ if (element) {
 // fonction de pause
 // Pour mettre en pause le jeu
 function pauseGame() {
-  if (currentState === gameStatut.RUNNING) {
-    currentState = gameStatut.PAUSED;
-
-    audio.pause(); // Commencez la lecture audio
-    pauseMenu.classList.remove("off");
-    pauseMenu.classList.add("flex");
-    document.querySelector("body")?.classList.add("has-bg");
-  } else if (currentState === gameStatut.PAUSED) {
-    currentState = gameStatut.RUNNING;
-
-    audio.play(); // Commencez la lecture audio
+  if (firstPlay && currentType == deviceType.MOBILE) {
+    adviceMenu.style.display = "flex";
     pauseMenu.classList.remove("flex");
     pauseMenu.classList.add("off");
-    document.querySelector("body")?.classList.remove("has-bg");
+    setTimeout(() => {
+      adviceMenu.style.display = "none";
+      firstPlay = false;
+      document.querySelector("body")?.classList.remove("has-bg");
+      audio.play();
+      currentState = gameStatut.RUNNING;
+      requestAnimationFrame(gameLoop);
+    }, 6000);
+  } else {
+    if (currentState === gameStatut.RUNNING) {
+      currentState = gameStatut.PAUSED;
 
-    // Redémarrer la boucle du jeu
-    requestAnimationFrame(gameLoop);
+      audio.pause(); // Commencez la lecture audio
+      pauseMenu.classList.remove("off");
+      pauseMenu.classList.add("flex");
+      document.querySelector("body")?.classList.add("has-bg");
+    } else if (currentState === gameStatut.PAUSED) {
+      currentState = gameStatut.RUNNING;
+
+      audio.play(); // Commencez la lecture audio
+      pauseMenu.classList.remove("flex");
+      pauseMenu.classList.add("off");
+      document.querySelector("body")?.classList.remove("has-bg");
+
+      // Redémarrer la boucle du jeu
+      requestAnimationFrame(gameLoop);
+    }
   }
 }
