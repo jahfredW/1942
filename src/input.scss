@@ -66,6 +66,19 @@ h1 {
   border-radius: 0%;
 }
 
+.has-bg {
+  background-image: url("/assets/1942.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.9; /* Opacité faible (0.2 représente 20% d'opacité) */
+}
+
+// #background-image {
+//     width: 100%;
+//     height: 100%;
+//     object-fit: cover; /* Ou object-fit: contain selon vos préférences */
+// }
+
 .cloud1 {
   z-index: 400;
   position: absolute;
@@ -311,8 +324,6 @@ body.pause-active .pause-menu {
   display: flex;
 }
 
-
-
 // animations
 /* Animation pour faire apparaître le titre depuis la gauche */
 @keyframes slideInFromLeft {
@@ -337,8 +348,6 @@ body.pause-active .pause-menu {
     opacity: 1;
   }
 }
-
-
 
 /* Appliquez les animations aux éléments spécifiques */
 .slide-from-right {

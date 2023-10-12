@@ -2,75 +2,73 @@ import SquareContainer from "../SquareContainer";
 import IHtmlElementInterface from "../Interfaces/IHtmlElementInterface";
 import Weapon from "./Weapon";
 
-export default class SubMissile extends Weapon implements IHtmlElementInterface  {
+export default class SubMissile
+  extends Weapon
+  implements IHtmlElementInterface
+{
+  constructor() {
+    super();
+  }
 
-    constructor() {
-          super();
-    }
+  // Contruction de la bullet en html
+  build(container: SquareContainer): void {
+    this.htmlElement = document.querySelector<HTMLImageElement>(".missile")!;
+    let containerElt = container.getHtmlElement();
+    this.htmlElement = document.createElement("img");
+    this.htmlElement.classList.add("subMissile");
+    this.htmlElement.src = "/assets/bullet4.png";
 
-    // Contruction de la bullet en html
-    build(container: SquareContainer): void {
-        this.htmlElement = document.querySelector<HTMLImageElement>('.missile')!
-        let containerElt = container.getHtmlElement();
-        this.htmlElement = document.createElement("img");
-        this.htmlElement.classList.add("subMissile");
-        this.htmlElement.src = "/assets/bullet4.png"
-        
-        this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
-        this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
+    this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
+    this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
 
-        this.ttl = 3000;
-        
+    this.ttl = 2300;
 
-        // dimensions qui viennent du DOM, à récupérer après l'injection dans le DOM !!!!
-        // this.dimensions.width = this.htmlElement.offsetWidth;
-        // this.dimensions.height = this.htmlElement.offsetHeight;
+    // dimensions qui viennent du DOM, à récupérer après l'injection dans le DOM !!!!
+    // this.dimensions.width = this.htmlElement.offsetWidth;
+    // this.dimensions.height = this.htmlElement.offsetHeight;
 
-        SquareContainer.missileList.push(this);
-        
+    SquareContainer.missileList.push(this);
 
-        containerElt.appendChild(this.htmlElement);
+    containerElt.appendChild(this.htmlElement);
 
-        this.dimensions.width = this.htmlElement.offsetWidth;
-        this.dimensions.height = this.htmlElement.offsetHeight;
-    }
+    this.dimensions.width = this.htmlElement.offsetWidth;
+    this.dimensions.height = this.htmlElement.offsetHeight;
+  }
 
-    getHtmlElement(): HTMLImageElement {
-        return this.htmlElement;
-    }
+  getHtmlElement(): HTMLImageElement {
+    return this.htmlElement;
+  }
 
-    setCoord(x : number, y : number) : void {
-        this.coords.x = x ;
-        this.coords.y = y ;
-    }
+  setCoord(x: number, y: number): void {
+    this.coords.x = x;
+    this.coords.y = y;
+  }
 
-    getCoord(){
-        return { "x" : this.coords.x, "y" : this.coords.y }
-    }
+  getCoord() {
+    return { x: this.coords.x, y: this.coords.y };
+  }
 
-    getCoordX() : number {
-        return this.coords.x
-    }
+  getCoordX(): number {
+    return this.coords.x;
+  }
 
-    getCoordY() : number {
-        return this.coords.y
-    }
+  getCoordY(): number {
+    return this.coords.y;
+  }
 
-    getWidth() : number  {
-        return this.dimensions.width
-    }
+  getWidth(): number {
+    return this.dimensions.width;
+  }
 
-    getHeight() : number {
-        return this.dimensions.height
-    }
+  getHeight(): number {
+    return this.dimensions.height;
+  }
 
-    setAngle(value : number){
-        this.angle = value;
-    }
+  setAngle(value: number) {
+    this.angle = value;
+  }
 
-    
-
-    move(deltaTime: number = 0): void {
+  move(deltaTime: number = 0): void {
     let vInit = 1;
 
     // Utilisez deltaTime pour rendre l'animation indépendante du taux de rafraîchissement
@@ -80,15 +78,13 @@ export default class SubMissile extends Weapon implements IHtmlElementInterface 
     // if (this.coords.y < 0) {
     //     this.htmlElement.classList.add("off");
     //     this.htmlElement.remove();
-        
-        // Supprimez cette instance de Bullet du tableau BulletList
-    
+
+    // Supprimez cette instance de Bullet du tableau BulletList
 
     // Mettez à jour la propriété CSS
-    if(this.htmlElement){
-        this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
-        this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
+    if (this.htmlElement) {
+      this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
+      this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
     }
-    
-}
+  }
 }

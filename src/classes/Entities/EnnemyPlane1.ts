@@ -5,32 +5,30 @@ import Bullet from "./Bullet";
 import ShootingManager from "../Managers/ShootingManager";
 import Plane from "./Plane";
 import EnnemyPlane from "./EnnemyPlane";
-import MovePattern from "../Gameplay/movePattern";
-
-
+import MovePattern from "../Gameplay/MovePattern";
 
 /**
- * Interface coordonnées du carré 
+ * Interface coordonnées du carré
  */
 interface squareCoords {
-    x : number,
-    y : number
+  x: number;
+  y: number;
 }
 
 /**
- * interface dimensions du carré 
+ * interface dimensions du carré
  */
 interface squareDimensions {
-    width : number,
-    height : number
-} 
+  width: number;
+  height: number;
+}
 
 /**
  * classe rectangle : classe abstraite qui permet de servir de base pour construire les rectangles,
  * en leur ajouter la classe 'rect' définie dans le fichier input.scss
  */
 export default class EnnemyPlane1 extends EnnemyPlane {
-    static allEnnemyPlane : EnnemyPlane[] = [];
+  static allEnnemyPlane: EnnemyPlane[] = [];
 
   constructor() {
     super();
@@ -39,23 +37,23 @@ export default class EnnemyPlane1 extends EnnemyPlane {
   }
 
   // Contruction du rectangle
-  build(container: SquareContainer, x : number): void {
-    this.htmlElement = document.querySelector<HTMLImageElement>(".ennemyPlane1")!;
+  build(container: SquareContainer, x: number): void {
+    this.htmlElement =
+      document.querySelector<HTMLImageElement>(".ennemyPlane1")!;
     let containerElt = container.getHtmlElement();
     this.htmlElement = document.createElement("img");
 
     this.htmlElement.classList.add("ennemyPlane1");
 
-    this.htmlElement.src=  "/assets/ennemyPlanes/avion1.png";
+    this.htmlElement.src = "/assets/ennemyPlanes/avion1.png";
 
-    if(x != 0){
+    if (x != 0) {
       this.coords.x = x;
     } else {
-      this.coords.x =  Math.floor(Math.random() * container.getWidth()) + 1;
+      this.coords.x = Math.floor(Math.random() * container.getWidth()) + 1;
     }
-     
+
     this.coords.y = 0;
-    
 
     this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
     this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
@@ -70,27 +68,30 @@ export default class EnnemyPlane1 extends EnnemyPlane {
 
     SquareContainer.ennemyPlaneList.push(this);
 
-    console.log("dimensions conteneur", container.getWidth(), container.getHeight());
-
+    console.log(
+      "dimensions conteneur",
+      container.getWidth(),
+      container.getHeight()
+    );
   }
 
-  getCoordX() : number {
+  getCoordX(): number {
     return this.coords.x;
   }
 
-  getCoordY() : number {
+  getCoordY(): number {
     return this.coords.y;
   }
 
-  getWidth() : number {
+  getWidth(): number {
     return this.dimensions.width;
   }
 
-  getHeight() : number {
+  getHeight(): number {
     return this.dimensions.height;
   }
 
-  // affichage du rectangle en utlisant les propriétés CSS 
+  // affichage du rectangle en utlisant les propriétés CSS
   display(): void {
     this.htmlElement.style.setProperty("--x-position", `${this.coords.x}px`);
     this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
@@ -108,35 +109,38 @@ export default class EnnemyPlane1 extends EnnemyPlane {
 
   setLastTimeShot(value: number): this {
     this.lastShotTime = value;
-    return this
+    return this;
   }
 
   move(deltaTime: number = 0): void {
     MovePattern.goDown(deltaTime, this);
-
   }
 
-    tryShoot(timestamp: number, squareContainer : SquareContainer, plane : Plane): void {
+  tryShoot(
+    timestamp: number,
+    squareContainer: SquareContainer,
+    plane: Plane
+  ): void {
     if (this.shootingManager.canShoot(timestamp)) {
-        // logique de tir ici, par exemple :
-        let dx = plane.getCoords().x - this.getCoordX(); // suppose que `this.x` et `this.y` sont les coordonnées du navire
-        let dy = plane.getCoords().y - this.getCoordY();
-        let angle = Math.atan2(dy, dx);
-     
+      // logique de tir ici, par exemple :
+      let dx = plane.getCoords().x - this.getCoordX(); // suppose que `this.x` et `this.y` sont les coordonnées du navire
+      let dy = plane.getCoords().y - this.getCoordY();
+      let angle = Math.atan2(dy, dx);
 
-
-        this.shoot(squareContainer, angle, timestamp);
+      this.shoot(squareContainer, angle, timestamp);
     }
-    }
+  }
 
-  shoot(squareContainer: SquareContainer, angle : number, timeStamp: number): void {
+  shoot(
+    squareContainer: SquareContainer,
+    angle: number,
+    timeStamp: number
+  ): void {
     let weaponfactory = new ConcreteWeaponFactory();
     let missile = weaponfactory.weaponCreate("missile");
     missile.setAngle(angle);
-    missile.setCoord(this.coords.x - 4, this.coords.y);  // Définir les coordonnées avant de construire
+    missile.setCoord(this.coords.x - 4, this.coords.y); // Définir les coordonnées avant de construire
     missile.build(squareContainer);
     missile.setTimeStamp(timeStamp);
-    
-
   }
 }

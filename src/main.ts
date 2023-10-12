@@ -12,7 +12,7 @@ import Game from "./classes/Game";
 import SubMissile from "./classes/Entities/SubMissile";
 
 // mise en route de l'audio
-const audio = new Audio("../../public/audios/tom.mp3");
+const audio = new Audio("/audios/tom.mp3");
 audio.loop = true; // Définissez la propriété loop sur true
 // audio.play(); // Commencez la lecture audio
 
@@ -86,9 +86,7 @@ const animationManager = new AnimationManager(helice);
 
 // main Game Loop
 function gameLoop(timestamp: number): void {
-
   if (currentState === gameStatut.RUNNING) {
-    
     if (pausedTime > 0) {
       // Si le jeu était en pause, ajustez lastTime
       lastTime += timestamp - pausedTime;
@@ -117,7 +115,6 @@ function gameLoop(timestamp: number): void {
       ship.tryShoot(timestamp, squareContainer, plane); // Mettre à jour le moment du dernier tir
     }
 
-   
     // déplacement des avions ennemy
     for (const eplane of SquareContainer.ennemyPlaneList) {
       eplane.move(deltaTime);
@@ -125,8 +122,8 @@ function gameLoop(timestamp: number): void {
 
       eplane.tryShoot(timestamp, squareContainer, plane); // Mettre à jour le moment du dernier tir
     }
-    
-    // déplacement des nuages 
+
+    // déplacement des nuages
     for (const cloud of SquareContainer.cloudList) {
       // Assume BulletList est le tableau contenant toutes vos instances de Bullet
       cloud.move(deltaTime);
@@ -247,12 +244,14 @@ function pauseGame() {
     audio.pause(); // Commencez la lecture audio
     pauseMenu.classList.remove("off");
     pauseMenu.classList.add("flex");
+    document.querySelector("body")?.classList.add("has-bg");
   } else if (currentState === gameStatut.PAUSED) {
     currentState = gameStatut.RUNNING;
 
     audio.play(); // Commencez la lecture audio
     pauseMenu.classList.remove("flex");
     pauseMenu.classList.add("off");
+    document.querySelector("body")?.classList.remove("has-bg");
 
     // Redémarrer la boucle du jeu
     requestAnimationFrame(gameLoop);

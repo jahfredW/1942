@@ -20,7 +20,7 @@ export default class Cloud2 extends Cloud implements IHtmlElementInterface {
     this.htmlElement.src = "/assets/clouds/cloud2.png";
 
     // initialisation des coordonnées
-    this.coords.x =  Math.floor(Math.random() * container.getWidth()) + 1; 
+    this.coords.x = Math.floor(Math.random() * container.getWidth()) + 1;
     this.coords.y = 0;
 
     this.htmlElement.style.setProperty("--y-position", `${this.coords.y}px`);
@@ -74,7 +74,7 @@ export default class Cloud2 extends Cloud implements IHtmlElementInterface {
     let vInit = 1;
 
     // Utilisez deltaTime pour rendre l'animation indépendante du taux de rafraîchissement
-    this.coords.y += vInit * (deltaTime / 8);
+    this.coords.y += vInit * deltaTime;
 
     // Mettez à jour la propriété CSS ! TRES IMPORTANT
     if (this.htmlElement) {
